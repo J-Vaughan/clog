@@ -10,7 +10,7 @@ To build the program into `bin/`
 make
 ```
 
-To build and install the program into `[whereever you're supposed to]`
+To build and install the program into `[wherever you're supposed to]`
 
 ```sh
 make install
@@ -33,4 +33,8 @@ make uninstall
 This program is licensed under the GNU General Public License, version 3. The
 full terms can be found in [LICENSE](LICENSE).
 
-Thank you.
+## Style
+
+This program follows the [NASA C Style Guide](doc/nasa-c-style.pdf) as closely
+as possible, and you are highly encouraged to follow suite. Every contribution
+must follow the format of this guide. Thank you.

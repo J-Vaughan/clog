@@ -8,9 +8,4 @@
  * Variable             Type      Description                                  *
  * --------             ----      -----------                                  *
  *                                                                             *
- * DEVELOPMENT HISTORY: (STILL REQUIRED IF USING A VCS)                        *
- *                                                                             *
- * Date       Author    Commit    Release   Description                        *
- * ----       ------    ------    -------   -----------                        *
- *                                                                             *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

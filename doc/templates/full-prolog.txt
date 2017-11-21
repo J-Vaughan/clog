@@ -29,8 +29,8 @@
  *                                                                             *
  * DEVELOPMENT HISTORY: (STILL REQUIRED IF USING A VCS)                        *
  *                                                                             *
- * Date       Author    Commit    Release   Description                        *
- * ----       ------    ------    -------   -----------                        *
+ * Date       Author    Minor     Release   Description                        *
+ * ----       ------    -----     -------   -----------                        *
  *                                                                             *
  * ALGORITHM (PDL)                                                             *
  *                                                                             *

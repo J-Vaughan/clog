@@ -19,9 +19,9 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /* FILE PROLOG * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * FILE NAME: main.c                                                           *
+ * FILE NAME:                                                                  *
  *                                                                             *
- * PURPOSE: Provides the main logic behind the program                         *
+ * PURPOSE:                                                                    *
  *                                                                             *
  * FILE REFERENCES:                                                            *
  *                                                                             *
@@ -49,8 +49,8 @@
  *                                                                             *
  * DEVELOPMENT HISTORY: (STILL REQUIRED IF USING A VCS)                        *
  *                                                                             *
- * Date       Author    Commit    Release   Description                        *
- * ----       ------    ------    -------   -----------                        *
+ * Date       Author    Minor     Release   Description                        *
+ * ----       ------    -----     -------   -----------                        *
  *                                                                             *
  * ALGORITHM (PDL)                                                             *
  *                                                                             *

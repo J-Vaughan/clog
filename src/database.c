@@ -17,9 +17,9 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /* FILE PROLOG * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * FILE NAME: database.c                                                       *
+ * FILE NAME:                                                                  *
  *                                                                             *
- * PURPOSE: Manage the database connections                                    *
+ * PURPOSE:                                                                    *
  *                                                                             *
  * FILE REFERENCES:                                                            *
  *                                                                             *
@@ -32,8 +32,24 @@
  * Name       Type           I/O            Description                        *
  * ----       ----           ---            -----------                        *
  *                                                                             *
+ * EXTERNAL REFERENCES:                                                        *
+ *                                                                             *
+ * Name                     Descripton                                         *
+ * ----                     ----------                                         *
+ *                                                                             *
+ * ABNORMAL TERMINATION CONDITIONS, ERROR AND WARNING MESSAGES:                *
+ *                                                                             *
  * ASSUMPTIONS, CONSTRAINTS, RESTRICTIONS:                                     *
  *                                                                             *
  * NOTES:                                                                      *
+ *                                                                             *
+ * REQUIREMENTS/FUNCTIONAL SPECIFICATIONS REFERENCES:                          *
+ *                                                                             *
+ * DEVELOPMENT HISTORY: (STILL REQUIRED IF USING A VCS)                        *
+ *                                                                             *
+ * Date       Author    Minor     Release   Description                        *
+ * ----       ------    -----     -------   -----------                        *
+ *                                                                             *
+ * ALGORITHM (PDL)                                                             *
  *                                                                             *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

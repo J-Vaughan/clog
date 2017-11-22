@@ -1,6 +1,6 @@
 CFLAGS = -Wall
 CC = gcc
-INCLUDES = -Iinc -Isrc
+INCLUDES = -I./inc
 LIBRARIES = 
 
 VPATH = .:./inc:./src
@@ -10,7 +10,10 @@ $(TARGET): main.o database.o
 	$(CC) $(CFLAGS) -o $(TARGET) $(INCLUDES) $(LIBRARIES) main.o database.o
 
 main.o:	main.c
-	$(CC) $(CFLAGS) -c main.c $(INCLUDES) $(LIBRARIES)
+	$(CC) $(CFLAGS) -c src/main.c $(INCLUDES) $(LIBRARIES)
 
 database.o: database.c
-	$(CC) $(CFLAGS) -c database.c $(INCLUDES) $(LIBRARIES)
+	$(CC) $(CFLAGS) -c src/database.c $(INCLUDES) $(LIBRARIES)
+
+clean:
+	$(RM) *.o clog

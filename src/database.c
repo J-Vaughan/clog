@@ -17,22 +17,24 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /* FILE PROLOG * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * FILE NAME:                                                                  *
+ * FILE NAME: database.c                                                       *
  *                                                                             *
- * PURPOSE:                                                                    *
+ * PURPOSE: Manage the database connections                                    *
  *                                                                             *
  * FILE REFERENCES:                                                            *
  *                                                                             *
- * Name                      I/O            Description                        *
- * ----                      ---            -----------                        *
+ * Name                      Description                                       *
+ * ----                      -----------                                       *
+ * globals.h                 Contains global file*s, etc.                      *
  *                                                                             *
  * EXTERNAL VARIABLES:                                                         *
- * Source: <            >                                                      *
+ * Source: < globals.h >                                                       *
  *                                                                             *
- * Name       Type           I/O            Description                        *
- * ----       ----           ---            -----------                        *
+ * Name       Type           Description                                       *
+ * ----       ----           -----------                                       *
+ * db         sqlite3        Global database pointer                           *
  *                                                                             *
- * EXTERNAL REFERENCES:                                                        *
+ * EXTERNAL REFERENCES: none                                                   *
  *                                                                             *
  * Name                     Descripton                                         *
  * ----                     ----------                                         *

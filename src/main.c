@@ -58,11 +58,12 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 int main (int argc, char* argv[])
 {
     int i;
-    char message_buffer[2048];
+    char* message_buffer;
 
     if (argc == 1) // No message given
     {
@@ -70,8 +71,18 @@ int main (int argc, char* argv[])
         return -1;
     }
 
-    for(i = 1; i <= argc; i++)
+    message_buffer = (char*) malloc(4096);
+
+    for (i = 1; i < argc; i++)
     {
         strcat(message_buffer, argv[i]);
+        if (i != argc - 1)
+            strcat(message_buffer, " ");
     }
+
+    printf("%s\n", message_buffer);
+
+    free(message_buffer);
+
+    return 0;
 }

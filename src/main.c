@@ -66,7 +66,7 @@ int main (int argc, char* argv[])
 
     if (argc == 1) // No message given
     {
-        fprintf(stderr, "Usage: clog <message>");
+        fprintf(stderr, "Usage: clog <message>\n");
         return -1;
     }
 

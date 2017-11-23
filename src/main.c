@@ -57,8 +57,21 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include <stdio.h>
+#include <string.h>
 
 int main (int argc, char* argv[])
 {
+    int i;
+    char message_buffer[2048];
 
+    if (argc == 1) // No message given
+    {
+        fprintf(stderr, "Usage: clog <message>");
+        return -1;
+    }
+
+    for(i = 1; i <= argc; i++)
+    {
+        strcat(message_buffer, argv[i]);
+    }
 }

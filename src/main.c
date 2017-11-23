@@ -61,6 +61,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "main.h"
+
 int main (int argc, char* argv[])
 {
     int i;
@@ -72,18 +74,26 @@ int main (int argc, char* argv[])
         return -1;
     }
 
-    message_buffer = (char*) malloc(4096);
+    cmdecho(argc, argv, &message_buffer);
 
-    for (i = 1; i < argc; i++)
+    free(message_buffer);
+
+    return 0;
+}
+
+int cmdecho (int argc, char* argv[], char* message_buffer)
+{
+    message_buffer = malloc(4096);
+
+    for (int i = 1; i < argc; i++)
     {
         strcat(message_buffer, argv[i]);
         if (i != argc - 1)
             strcat(message_buffer, " ");
     }
 
-    printf("%lu: %s\n", (unsigned long) time(NULL), message_buffer);
-
-    free(message_buffer);
-
+    if (printf("%lu: %s\n", (unsigned long) time(NULL), message_buffer) < 0)
+        fprintf(stderr, "01: Couldn't echo message\n");
+    
     return 0;
 }

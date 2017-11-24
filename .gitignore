@@ -1,3 +1,6 @@
+# Target executable
+clog
+
 # Prerequisites
 *.d
 

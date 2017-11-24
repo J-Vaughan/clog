@@ -4,7 +4,7 @@ Logging tool written in C
 
 ## Building
 
-To build the program into `bin/`
+To build the program into `./bin/`
 
 ```sh
 make

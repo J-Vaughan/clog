@@ -65,8 +65,7 @@
 
 int main (int argc, char* argv[])
 {
-    int i;
-    char* message_buffer;
+    char* message_buffer = malloc(4096);
 
     if (argc == 1) // No message given
     {
@@ -74,7 +73,7 @@ int main (int argc, char* argv[])
         return -1;
     }
 
-    cmdecho(argc, argv, &message_buffer);
+    cmdecho(argc, argv, message_buffer);
 
     free(message_buffer);
 
@@ -83,8 +82,6 @@ int main (int argc, char* argv[])
 
 int cmdecho (int argc, char* argv[], char* message_buffer)
 {
-    message_buffer = malloc(4096);
-
     for (int i = 1; i < argc; i++)
     {
         strcat(message_buffer, argv[i]);

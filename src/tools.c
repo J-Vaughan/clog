@@ -20,46 +20,20 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
 
-#include "cli.h"
+#include "tools.h"
 
-int cmdecho (char* message_buffer)
+//TODO Add error checking
+int parsemessage (int argc, char* argv[], char* buffer)
 {
-    if (printf("%lu: %s\n", (unsigned long) time(NULL), message_buffer) < 0)
+    for (int i = 1; i < argc; i++)
     {
-        fprintf(stderr, "Couldn't echo message\n");
-        return -3;
+        strcat(buffer, argv[i]);
+        if (i != argc - 1)
+        {
+            strcat(buffer, " ");
+        }
     }
 
     return 0;
-}
-
-int confirm (const char* prompt)
-{
-    if (prompt != NULL)
-    {
-        printf("%s (y/n): ", prompt);
-        if (fgetc(stdin) == 121)
-        {
-            putchar(10);
-            return 0;
-        } else
-        {
-            putchar(10);
-            return -1;
-        }
-    } else
-    {
-        printf("(y/n): ");
-        if (fgetc(stdin) == 121)
-        {
-            putchar(10);
-            return 0;
-        } else
-        {
-            putchar(10);
-            return -1;
-        }
-    }
 }

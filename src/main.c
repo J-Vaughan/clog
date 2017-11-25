@@ -41,7 +41,7 @@ int main (int argc, char* argv[])
         return -2;
     }
 
-    cmdecho(argc, argv, message_buffer);
+    cmdecho(message_buffer);
 
     free(message_buffer);
 

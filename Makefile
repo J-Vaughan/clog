@@ -1,7 +1,7 @@
 CFLAGS = -Wall -std=gnu99
 CC = gcc
 INCLUDES = -I./inc
-LIBRARIES = 
+LIBRARIES =
 
 VPATH = .:./inc:./src
 TARGET = clog
@@ -10,7 +10,7 @@ $(TARGET): bindir |  main.o database.o cli.o save.o
 	$(CC) $(CFLAGS) -o bin/$(TARGET) $(INCLUDES) $(LIBRARIES) main.o database.o cli.o save.o
 
 bindir:
-	if [ ! -d "bin" ]; \
+	@if [ ! -d "bin" ]; \
 		then mkdir "bin"; \
 	fi
 
@@ -29,3 +29,7 @@ save.o: save.c
 .PHONY: clean
 clean:
 	$(RM) *.o clog
+
+.PHONY: install
+install:
+	@echo "I don't know what to do here"

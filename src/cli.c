@@ -18,44 +18,6 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-/* FILE PROLOG * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * FILE NAME:                                                                  *
- *                                                                             *
- * PURPOSE:                                                                    *
- *                                                                             *
- * FILE REFERENCES:                                                            *
- *                                                                             *
- * Name                      I/O            Description                        *
- * ----                      ---            -----------                        *
- *                                                                             *
- * EXTERNAL VARIABLES:                                                         *
- * Source: <            >                                                      *
- *                                                                             *
- * Name       Type           I/O            Description                        *
- * ----       ----           ---            -----------                        *
- *                                                                             *
- * EXTERNAL REFERENCES:                                                        *
- *                                                                             *
- * Name                     Descripton                                         *
- * ----                     ----------                                         *
- *                                                                             *
- * ABNORMAL TERMINATION CONDITIONS, ERROR AND WARNING MESSAGES:                *
- *                                                                             *
- * ASSUMPTIONS, CONSTRAINTS, RESTRICTIONS:                                     *
- *                                                                             *
- * NOTES:                                                                      *
- *                                                                             *
- * REQUIREMENTS/FUNCTIONAL SPECIFICATIONS REFERENCES:                          *
- *                                                                             *
- * DEVELOPMENT HISTORY: (STILL REQUIRED IF USING A VCS)                        *
- *                                                                             *
- * Date       Author    Minor     Release   Description                        *
- * ----       ------    -----     -------   -----------                        *
- *                                                                             *
- * ALGORITHM (PDL)                                                             *
- *                                                                             *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 #include <stdio.h>
 #include <string.h>
 #include <time.h>

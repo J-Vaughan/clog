@@ -1,5 +1,5 @@
-#ifndef tools_h
-#define tools_h
+#ifndef save_h
+#define save_h
 
 int parsemessage (int argc, char* argv[], char* buffer);
 

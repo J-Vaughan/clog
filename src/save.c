@@ -20,6 +20,8 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "save.h"
 
@@ -33,6 +35,34 @@ int parsemessage (int argc, char* argv[], char* buffer)
             strcat(buffer, " ");
         }
     }
+
+    return 0;
+}
+
+int savemessage (char* buffer)
+{
+    FILE* logfile;
+    char* filename = "log/logfile";
+    char* unixtime;
+
+    unixtime = malloc(24);
+
+    if (sprintf(unixtime, "%lu: ", (unsigned long) time(NULL)) < 0)
+    {
+        fprintf(stderr, "Couldn't time\n");
+        return -5;
+    }
+
+    logfile = fopen(filename, "a");
+
+    fputs(unixtime, logfile);
+
+    fputs(buffer, logfile);
+
+    fputc(94, logfile);
+    fputc(10, logfile);
+
+    fclose(logfile);
 
     return 0;
 }

@@ -22,6 +22,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "save.h"
 #include "main.h"
 #include "cli.h"
 
@@ -39,6 +40,12 @@ int main (int argc, char* argv[])
     {
         fprintf(stderr, "Unable to parse message\n");
         return -2;
+    }
+
+    if (savemessage(message_buffer) != 0)
+    {
+        fprintf(stderr, "Unable to save message\n");
+        return -4;
     }
 
     cmdecho(message_buffer);

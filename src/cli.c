@@ -26,7 +26,7 @@
 
 int cmdecho (char* message_buffer)
 {
-    if (printf("%lu: %s\n", (unsigned long) time(NULL), message_buffer) < 0)
+    if (printf( "\033[34;1m" "%lu: " "\033[0m" "%s\n", (unsigned long) time(NULL), message_buffer) < 0)
     {
         fprintf(stderr, "Couldn't echo message\n");
         return -3;

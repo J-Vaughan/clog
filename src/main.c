@@ -35,6 +35,12 @@ int main (int argc, char* argv[])
         return -1;
     }
 
+    if (parsemessage(argc, argv, message_buffer) != 0)
+    {
+        fprintf(stderr, "Unable to parse message\n");
+        return -2;
+    }
+
     cmdecho(argc, argv, message_buffer);
 
     free(message_buffer);

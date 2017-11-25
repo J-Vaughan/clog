@@ -43,6 +43,10 @@ int main (int argc, char* argv[])
 
     cmdecho(message_buffer);
 
+    confirm(NULL);
+
+    confirm(message_buffer);
+
     free(message_buffer);
 
     return 0;

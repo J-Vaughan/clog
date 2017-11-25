@@ -42,23 +42,21 @@ int confirm (const char* prompt)
         printf("%s (y/n): ", prompt);
         if (fgetc(stdin) == 121)
         {
-            putchar(10);
             return 0;
         } else
         {
-            putchar(10);
             return -1;
         }
     } else
     {
-        printf("(y/n): ");
+        printf("Confirm? (y/n): ");
+        fgetc(stdin);
+
         if (fgetc(stdin) == 121)
         {
-            putchar(10);
             return 0;
         } else
         {
-            putchar(10);
             return -1;
         }
     }

@@ -23,7 +23,6 @@
 
 #include "save.h"
 
-//TODO Add error checking
 int parsemessage (int argc, char* argv[], char* buffer)
 {
     for (int i = 1; i < argc; i++)

@@ -1,6 +1,6 @@
 # CLog
 
-Logging tool written in C
+*C*rappy *Log*ging tool written in C
 
 ## Building
 

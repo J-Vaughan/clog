@@ -172,3 +172,19 @@ int methodname ()
 }
 ```
 
+## Variables
+
+### Naming
+
+Variable names should be expressive, without being too wordy. Conjunctions can
+be skipped unless required (your call).
+
+#### Suffixes
+
+* Pointers __should__ end in `_ptr`
+* Buffers __may__ end in `_buf`
+* File pointers __should__ end in `_fp`
+* File names __may__ end in `_fn`
+* Size/amount __may__ end in `_size`
+
+```c

@@ -43,7 +43,7 @@ int parsemessage (int argc, char* argv[], char* buffer)
 
 int savemessage (char* buffer)
 {
-    FILE* logfile;
+    FILE* logfile_fp;
     char* filename = "log/logfile";
     char* unixtime;
 
@@ -64,22 +64,22 @@ int savemessage (char* buffer)
         return -6;
     }
 
-    logfile = fopen(filename, "a");
+    logfile_fp = fopen(filename, "a");
 
-    if (logfile == NULL)
+    if (logfile_fp == NULL)
     {
         fprintf(stderr, "Couldn't open logfile\n");
         return -7;
     }
 
-    fputs(unixtime, logfile);
+    fputs(unixtime, logfile_fp);
 
-    fputs(buffer, logfile);
+    fputs(buffer, logfile_fp);
 
-    fputc(94, logfile);
-    fputc(10, logfile);
+    fputc(94, logfile_fp);
+    fputc(10, logfile_fp);
 
-    fclose(logfile);
+    fclose(logfile_fp);
 
     free(unixtime);
 

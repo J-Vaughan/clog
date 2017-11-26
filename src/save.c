@@ -57,10 +57,20 @@ int savemessage (char* buffer)
 
     if (mkdir("log", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0)
     {
-        printf("./log directory created\n");
+        printf("log directory created successfully\n");
+    } else
+    {
+        fprintf(stderr, "Couldn't create log directory\n");
+        return -6;
     }
 
     logfile = fopen(filename, "a");
+
+    if (logfile == NULL)
+    {
+        fprintf(stderr, "Couldn't open logfile\n");
+        return -7;
+    }
 
     fputs(unixtime, logfile);
 

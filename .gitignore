@@ -1,8 +1,12 @@
+# Log output
+log/logfile
+
 # VS Code settings
 .vscode
 
 # Target executable
 clog
+bin/clog
 
 # Prerequisites
 *.d

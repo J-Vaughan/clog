@@ -1,6 +1,6 @@
 # CLog
 
-**C**rappy **Log**ging tool written in C
+Logging tool written in C
 
 ## Building
 
@@ -34,3 +34,10 @@ $ sudo make uninstall
 This program is licensed under the GNU General Public License, version 3. The
 full terms can be found in [LICENSE](LICENSE).
 
+## Name
+
+The "C" in CLog can stand for several things:
+
+* The **C** programming language
+* **C**holesterol, which also clogs your system
+* **C**rappy POS

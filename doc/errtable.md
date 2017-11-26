@@ -25,9 +25,9 @@ You can contact me at dev.jamesvaughan@gmail.com with any questions
 | Error Code | Description                                                     |
 |-----------:|-----------------------------------------------------------------|
 |         -1 | Usage error, not enough args given                              |
-|         -2 | parsemessage returned an error                                  |
-|         -3 | cmdecho returned an error                                       |
-|         -4 | savemessage returned an error                                   |
+|         -2 | `parsemessage` returned an error                                |
+|         -3 | `cmdecho` returned an error                                     |
+|         -4 | `savemessage` returned an error                                 |
 |         -5 | Couldn't format Unix time                                       |
 |         -6 | Couldn't create directory                                       |
 |         -7 | Couldn't open file                                              |

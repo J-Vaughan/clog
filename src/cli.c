@@ -24,7 +24,7 @@
 
 #include "cli.h"
 
-int cmdecho (char* message_buffer)
+int cmdecho (char* buffer)
 {
     if (printf( "\033[34;1m" "%lu: " "\033[0m" "%s\n", (unsigned long) time(NULL), message_buffer) < 0)
     {

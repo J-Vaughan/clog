@@ -22,6 +22,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #include "save.h"
 
@@ -45,12 +47,17 @@ int savemessage (char* buffer)
     char* filename = "log/logfile";
     char* unixtime;
 
-    unixtime = malloc(24);
+    unixtime = malloc(16);
 
     if (sprintf(unixtime, "%lu: ", (unsigned long) time(NULL)) < 0)
     {
         fprintf(stderr, "Couldn't time\n");
         return -5;
+    }
+
+    if (mkdir("log", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0)
+    {
+        printf("./log directory created\n");
     }
 
     logfile = fopen(filename, "a");
@@ -63,6 +70,8 @@ int savemessage (char* buffer)
     fputc(10, logfile);
 
     fclose(logfile);
+
+    free(unixtime);
 
     return 0;
 }

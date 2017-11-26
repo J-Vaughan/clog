@@ -179,12 +179,20 @@ int methodname ()
 Variable names should be expressive, without being too wordy. Conjunctions can
 be skipped unless required (your call).
 
-#### Suffixes
+__Suffixes__
 
-* Pointers __should__ end in `_ptr`
-* Buffers __may__ end in `_buf`
-* File pointers __should__ end in `_fp`
-* File names __may__ end in `_fn`
-* Size/amount __may__ end in `_size`
+* Pointers _should_ end in `_ptr`
+* Buffers _may_ end in `_buf`
+* File pointers _should_ end in `_fp`
+* File names _may_ end in `_fn`
+* Size/amount _may_ end in `_size`
 
 ```c
+int savemessage (char* buffer)
+{
+    FILE* logfile_fp;
+    char* filename = "log/logfile";
+    char* unixtime;
+
+    // ...
+}

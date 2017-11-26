@@ -32,4 +32,8 @@ clean:
 
 .PHONY: install
 install:
-	@echo "I don't know what to do here"
+	mv bin/clog /usr/bin/
+
+.PHONY: uninstall
+uninstall:
+	rm -f /usr/bin/clog

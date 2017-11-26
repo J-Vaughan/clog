@@ -7,25 +7,26 @@
 To build the program into `./bin/`
 
 ```sh
-make
+$ make
 ```
 
-To build and install the program into `[wherever you're supposed to]`
+To build and install the program into `/usr/bin/`
 
 ```sh
-make install
+$ make
+$ sudo make install
 ```
 
 To clean build directory
 
 ```sh
-make clean
+$ make clean
 ```
 
-To uninstall from `[wherever you're supposed to]`
+To uninstall from `/usr/bin/`
 
 ```sh
-make uninstall
+$ sudo make uninstall
 ```
 
 ## License
@@ -33,8 +34,3 @@ make uninstall
 This program is licensed under the GNU General Public License, version 3. The
 full terms can be found in [LICENSE](LICENSE).
 
-## Style
-
-This program follows the [NASA C Style Guide](doc/nasa-c-style.pdf) as closely
-as possible, and you are highly encouraged to follow suite. Every contribution
-must follow the format of this guide. Thank you.

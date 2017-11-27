@@ -25,10 +25,13 @@
 #include "save.h"
 #include "main.h"
 #include "cli.h"
+#include "show.h"
+#include "limits.h"
 
 int main (int argc, char* argv[])
 {
-    char* message_buffer = malloc(4096);
+    char* message_buffer = malloc(MAX_MESSAGE_LEN);
+    FILE* test_fp;
 
     if (argc == 1) {
         fprintf(stderr, "Usage: clog <message>\n");
@@ -48,6 +51,12 @@ int main (int argc, char* argv[])
     cmdecho(message_buffer);
 
     free(message_buffer);
+
+    test_fp = fopen("log/logfile", "r");
+
+    show(1, test_fp);
+
+    fclose(test_fp);
 
     return 0;
 }

@@ -19,39 +19,40 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include <stdio.h>
-#include <string.h>
-#include <time.h>
+#include <stdlib.h>
 
-#include "cli.h"
+#include "show.h"
+#include "limits.h"
 
-int cmdecho (char* buffer) {
-    if (printf("\033[34;1m" "%lu: " "\033[0m" "%s\n", (unsigned long) time(NULL), buffer) < 0) {
-        fprintf(stderr, "Couldn't echo message\n");
-        return -3;
+int show (int amount, FILE* log_fp) {
+    char* buffer;
+    unsigned long unixtime;
+
+    buffer = malloc(MAX_MESSAGE_LEN);
+
+    for (int i = 0; i < amount; i++) {
+
+        if (fscanf(log_fp, "%lu", &unixtime) < 0) {
+            fprintf(stderr, "Couldn't scan time from log\n");
+            return -8;
+        }
+
+        for (int ii = 0; i < MAX_MESSAGE_LEN - 1; ii++) {
+            buffer[ii] = fgetc(log_fp);
+
+            if (buffer[ii] == 94) {
+                buffer[ii] = 0;
+                break;
+            }
+        }
+
+        if (printf("\033[34;1m" "%lu: " "\033[0m" "%s\n", unixtime, buffer) < 0) {
+            fprintf(stderr, "Couldn't print message\n");
+            return -9;
+        }
     }
+
+    free(buffer);
 
     return 0;
-}
-
-int confirm (const char* prompt) {
-    if (prompt != NULL) {
-        printf("%s (y/n): ", prompt);
-        if (fgetc(stdin) == 121) {
-            return 0;
-        }
-        else {
-            return -1;
-        }
-    }
-    else {
-        printf("Confirm? (y/n): ");
-        fgetc(stdin);
-
-        if (fgetc(stdin) == 121) {
-            return 0;
-        }
-        else {
-            return -1;
-        }
-    }
 }

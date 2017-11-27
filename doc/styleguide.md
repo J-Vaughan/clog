@@ -88,10 +88,10 @@ No space, unless following a method definition or an if/else statement.
 ```c
 string = readline();
 
-if (string) {
+if (string == NULL) {
     /* Code */
 }
-else if (!string) {
+else if (string != NULL) {
     /* Code */
 }
 
@@ -161,6 +161,21 @@ int methodname () {
         fprintf(stderr, "Couldn't open file\n");
         return -7;
     }
+}
+```
+
+### Spacing
+
+If a method has no local variables, add a newline to help readability.
+
+```c
+int methodname (int x) {
+
+    for (int i = 0; i < x; i++) {
+        /* Code */
+    }
+
+    return 0;
 }
 ```
 

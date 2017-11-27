@@ -24,6 +24,7 @@
 #include <time.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 #include "save.h"
 
@@ -52,12 +53,14 @@ int savemessage (char* buffer) {
         return -5;
     }
 
-    if (mkdir("log", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0) {
-        printf("log directory created successfully\n");
-    }
-    else {
-        fprintf(stderr, "Couldn't create log directory\n");
-        return -6;
+    if (access("log/", W_OK) != 0) {
+        if (mkdir("log", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0) {
+            printf("log directory created successfully\n");
+        }
+        else {
+            fprintf(stderr, "Couldn't create log directory\n");
+            return -6;
+        }
     }
 
     logfile_fp = fopen(filename, "a");

@@ -24,10 +24,8 @@
 
 #include "cli.h"
 
-int cmdecho (char* buffer)
-{
-    if (printf( "\033[34;1m" "%lu: " "\033[0m" "%s\n", (unsigned long) time(NULL), buffer) < 0)
-    {
+int cmdecho (char* buffer) {
+    if (printf( "\033[34;1m" "%lu: " "\033[0m" "%s\n", (unsigned long) time(NULL), buffer) < 0) {
         fprintf(stderr, "Couldn't echo message\n");
         return -3;
     }
@@ -35,28 +33,24 @@ int cmdecho (char* buffer)
     return 0;
 }
 
-int confirm (const char* prompt)
-{
-    if (prompt != NULL)
-    {
+int confirm (const char* prompt) {
+    if (prompt != NULL) {
         printf("%s (y/n): ", prompt);
-        if (fgetc(stdin) == 121)
-        {
+        if (fgetc(stdin) == 121) {
             return 0;
-        } else
-        {
+        }
+        else {
             return -1;
         }
-    } else
-    {
+    }
+    else {
         printf("Confirm? (y/n): ");
         fgetc(stdin);
 
-        if (fgetc(stdin) == 121)
-        {
+        if (fgetc(stdin) == 121) {
             return 0;
-        } else
-        {
+        }
+        else {
             return -1;
         }
     }

@@ -27,13 +27,12 @@
 
 #include "save.h"
 
-int parsemessage (int argc, char* argv[], char* buffer)
-{
-    for (int i = 1; i < argc; i++)
-    {
+int parsemessage (int argc, char* argv[], char* buffer) {
+
+    for (int i = 1; i < argc; i++) {
         strcat(buffer, argv[i]);
-        if (i != argc - 1)
-        {
+
+        if (i != argc - 1) {
             strcat(buffer, " ");
         }
     }
@@ -41,43 +40,38 @@ int parsemessage (int argc, char* argv[], char* buffer)
     return 0;
 }
 
-int savemessage (char* buffer)
-{
+int savemessage (char* buffer) {
     FILE* logfile_fp;
     char* filename = "log/logfile";
     char* unixtime;
 
     unixtime = malloc(16);
 
-    if (sprintf(unixtime, "%lu: ", (unsigned long) time(NULL)) < 0)
-    {
+    if (sprintf(unixtime, "%lu: ", (unsigned long) time(NULL)) < 0) {
         fprintf(stderr, "Couldn't time\n");
         return -5;
     }
 
-    if (mkdir("log", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0)
-    {
+    if (mkdir("log", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0) {
         printf("log directory created successfully\n");
-    } else
-    {
+    }
+    else {
         fprintf(stderr, "Couldn't create log directory\n");
         return -6;
     }
 
     logfile_fp = fopen(filename, "a");
 
-    if (logfile_fp == NULL)
-    {
+    if (logfile_fp == NULL) {
         fprintf(stderr, "Couldn't open logfile\n");
         return -7;
     }
 
     fputs(unixtime, logfile_fp);
-
     fputs(buffer, logfile_fp);
 
-    fputc(94, logfile_fp);
-    fputc(10, logfile_fp);
+    fputc(94, logfile_fp); // ^
+    fputc(10, logfile_fp); // \cr
 
     fclose(logfile_fp);
 

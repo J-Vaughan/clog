@@ -30,20 +30,17 @@ int main (int argc, char* argv[])
 {
     char* message_buffer = malloc(4096);
 
-    if (argc == 1) // No message given
-    {
+    if (argc == 1) {
         fprintf(stderr, "Usage: clog <message>\n");
         return -1;
     }
 
-    if (parsemessage(argc, argv, message_buffer) != 0)
-    {
+    if (parsemessage(argc, argv, message_buffer) != 0) {
         fprintf(stderr, "Unable to parse message\n");
         return -2;
     }
 
-    if (savemessage(message_buffer) != 0)
-    {
+    if (savemessage(message_buffer) != 0) {
         fprintf(stderr, "Unable to save message\n");
         return -4;
     }

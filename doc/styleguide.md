@@ -66,19 +66,17 @@ Line comments should always have a space in between the `//` and the comment
 
 #### **`{}`**
 
-The `{` is placed on a newline.
+The `{` is placed on the same line.
 
 ```c
-int method ()
-{
+int method () {
     /* Code */
 }
 
-if ()
-{
+if () {
     /* Code */
-} else
-{
+}
+else {
     /* Code */
 }
 ```
@@ -90,16 +88,14 @@ No space, unless following a method definition or an if/else statement.
 ```c
 string = readline();
 
-if (string)
-{
+if (string) {
     /* Code */
-} else if (!string)
-{
+}
+else if (!string) {
     /* Code */
 }
 
-int main (int argc, char* argv[])
-{
+int main (int argc, char* argv[]) {
     /* Code */
 }
 ```
@@ -113,11 +109,10 @@ encountered, a unique negative value should be returned. All of these values are
 documented in the [error table](errtable.md).
 
 ```c
-if (conditional == error)
-{
+if (conditional == error) {
     return -x; // Where x is the applicable error code
-} else
-{
+}
+else {
     return 0;
 }
 ```
@@ -131,8 +126,7 @@ files.
 // (src/)main.c
 #include "main.h"
 
-int methodname (int arg1, char* arg2)
-{
+int methodname (int arg1, char* arg2) {
   /* Code */
 }
 
@@ -157,15 +151,13 @@ Methods should print a short error message, if possible, upon encountering an
 error.
 
 ```c
-int methodname ()
-{
+int methodname () {
     char* filename = "invalid///_/file..";
     FILE* fp;
 
     fp = fopen(filename, "r");
 
-    if (fp == NULL)
-    {
+    if (fp == NULL) {
         fprintf(stderr, "Couldn't open file\n");
         return -7;
     }
@@ -181,15 +173,14 @@ be skipped unless required (your call).
 
 __Suffixes__
 
-* Pointers _should_ end in `_ptr`
+* Pointers _should_ end in `_ptr`, most `char*` excepted.
 * Buffers _may_ end in `_buf`
 * File pointers _should_ end in `_fp`
 * File names _may_ end in `_fn`
 * Size/amount _may_ end in `_size`
 
 ```c
-int savemessage (char* buffer)
-{
+int savemessage (char* buffer) {
     FILE* logfile_fp;
     char* filename = "log/logfile";
     char* unixtime;

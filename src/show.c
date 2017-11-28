@@ -32,7 +32,7 @@ int show (int amount, FILE* log_fp) {
 
     for (int i = 0; i < amount; i++) {
 
-        if (fscanf(log_fp, "%lu", &unixtime) < 0) {
+        if (fscanf(log_fp, "%lu %*2c", &unixtime) < 0) {
             fprintf(stderr, "Couldn't scan time from log\n");
             return -8;
         }

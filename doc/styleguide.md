@@ -32,13 +32,11 @@ CLog uses 4 spaces to indent. Additional spaces may be used for variable, etc.
 alignment to help readability.
 
 ```c
-int main ()
-{
+int main () {
     int   number;
     char* string1;
 
-    if (number != string1)
-    {
+    if (number != string1) {
         printf("Uncasted strings aren't ints\n");
     }
 }

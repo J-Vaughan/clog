@@ -29,13 +29,17 @@
 #include "limits.h"
 
 int main (int argc, char* argv[])
-{
+{   
     char* message_buffer = malloc(MAX_MESSAGE_LEN);
     FILE* test_fp;
 
     if (argc == 1) {
         fprintf(stderr, "Usage: clog <message>\n");
         return -1;
+    }
+
+    if (argv[1][0] == '-') {
+        printf("- detected\n");
     }
 
     if (parsemessage(argc, argv, message_buffer) != 0) {

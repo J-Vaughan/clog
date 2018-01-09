@@ -18,7 +18,7 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.5.9
+// Version: 0.5.10
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,6 +33,8 @@ int show (int amount, FILE* log_fp) {
     int log_fn;
     struct stat log_st;
     long long log_size;
+    int iterator = 1;
+    int looper = 0;
 
     log_fn = fileno(log_fp);
 
@@ -47,31 +49,34 @@ int show (int amount, FILE* log_fp) {
 
     // TODO: handle fseek errors
 
+    RETRY:
 
+    fseek(log_fp, -iterator, SEEK_END);
 
-    for (int i = 0; i < amount; i++) {
-
-        if (fscanf(log_fp, "%lu %*2c", &unixtime) < 0) {
-            fprintf(stderr, "Couldn't scan time from log\n");
-            return -8;
-        }
-
-        for (int ii = 0; i < MAX_MESSAGE_LEN - 1; ii++) {
-            buffer[ii] = fgetc(log_fp);
-
-            if (buffer[ii] == 94) {
-                buffer[ii] = 0;
-                break;
-            }
-        }
-
-        if (printf("\033[34;1m" "%lu: " "\033[0m" "%s\n", unixtime, buffer) < 0) {
-            fprintf(stderr, "Couldn't print message\n");
+    if (fgetc(log_fp) != '^') {
+        looper++;
+        iterator++;
+        if (iterator >= 5) {
+            fprintf(stderr, "Couldn't find ending caret\n");
             return -9;
         }
+        goto RETRY;
     }
 
+    iterator += 1;
+
+    fseek(log_fp, -iterator, SEEK_END);
+
+    CAPTURE:
+
+    if (iterator >= MAX_MESSAGE_LEN - 2) goto END;
+
+    buffer[iterator - 3] = fgetc(log_fp);
+    printf("%c at %i\n", buffer[iterator - 3], iterator);
+
     free(buffer);
+
+    END:
 
     return 0;
 }

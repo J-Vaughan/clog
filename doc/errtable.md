@@ -32,5 +32,6 @@ You can contact me at dev.jamesvaughan@gmail.com with any questions
 |         -6 | Couldn't create directory                                       |
 |         -7 | Couldn't open file                                              |
 |         -8 | `fstat` returned an error                                       |
+|         -9 | Couldn't find ending caret                                      |
 
 Add rows as necessary.

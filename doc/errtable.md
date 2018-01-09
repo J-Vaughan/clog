@@ -31,5 +31,6 @@ You can contact me at dev.jamesvaughan@gmail.com with any questions
 |         -5 | Couldn't format Unix time                                       |
 |         -6 | Couldn't create directory                                       |
 |         -7 | Couldn't open file                                              |
+|         -8 | `fstat` returned an error                                       |
 
 Add rows as necessary.

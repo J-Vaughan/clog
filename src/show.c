@@ -18,8 +18,11 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+// Version: 0.5.9
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
 
 #include "show.h"
 #include "limits.h"
@@ -27,8 +30,24 @@
 int show (int amount, FILE* log_fp) {
     char* buffer;
     unsigned long unixtime;
+    int log_fn;
+    struct stat log_st;
+    long long log_size;
+
+    log_fn = fileno(log_fp);
+
+    if (fstat(log_fn, &log_st) != 0) {
+        fprintf(stderr, "Couldn't get log files stats\n");
+        return -8;
+    }
+
+    log_size = (long long) log_st.st_size;
 
     buffer = malloc(MAX_MESSAGE_LEN);
+
+    // TODO: handle fseek errors
+
+
 
     for (int i = 0; i < amount; i++) {
 

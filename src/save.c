@@ -44,16 +44,16 @@ int parsemessage (int argc, char* argv[], char* buffer) {
 }
 
 int savemessage (char* buffer) {
-    FILE* logfile_fp;
-    char* filename = "log/logfile";
-    char* unixtime;
+    FILE*  logfile_fp;
+    char*  filename = "log/logfile"; // TODO: user-configurable
+    time_t date;
+    struct tm *date_tm;
+    char   date_s[32];
 
-    unixtime = malloc(16);
+    date = time(NULL);
+    date_tm = localtime(&date);
 
-    if (sprintf(unixtime, "%lu: ", (unsigned long) time(NULL)) < 0) {
-        fprintf(stderr, "Couldn't time\n");
-        return -5;
-    }
+    strftime(date_s, sizeof(date_s), "%c> ", date_tm); // TODO: error code -5
 
     if (access("log/", W_OK) != 0) {
         if (mkdir("log", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0) {
@@ -72,15 +72,12 @@ int savemessage (char* buffer) {
         return -7;
     }
 
-    fputs(unixtime, logfile_fp);
+    fputs(date_s, logfile_fp);
     fputs(buffer, logfile_fp);
 
-    fputc(94, logfile_fp); // ^
     fputc(10, logfile_fp); // \cr
 
     fclose(logfile_fp);
-
-    free(unixtime);
 
     return 0;
 }

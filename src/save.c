@@ -18,7 +18,7 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.5.10
+// Version: 0.5.11
 
 #include <stdio.h>
 #include <string.h>
@@ -49,6 +49,8 @@ int savemessage (char* buffer) {
     time_t date;
     struct tm *date_tm;
     char   date_s[32];
+    int    buffersize;
+    int    i = 0;
 
     date = time(NULL);
     date_tm = localtime(&date);
@@ -72,10 +74,15 @@ int savemessage (char* buffer) {
         return -7;
     }
 
+    while (buffer[i] != NULL)
+        i++;
+
     fputs(date_s, logfile_fp);
     fputs(buffer, logfile_fp);
+    fprintf(logfile_fp, " $%i\n", i);
 
-    fputc(10, logfile_fp); // \cr
+    // TODO: check if windows and crlf as necessary >> alternatively, not needed since printf does stuff
+    // fputc(10, logfile_fp); // \lf
 
     fclose(logfile_fp);
 

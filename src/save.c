@@ -18,7 +18,7 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.5.11
+// Version: 0.6.0
 
 #include <stdio.h>
 #include <string.h>
@@ -29,11 +29,16 @@
 #include <unistd.h>
 
 #include "save.h"
+#include "limits.h"
 
 int parsemessage (int argc, char* argv[], char* buffer) {
-
     for (int i = 1; i < argc; i++) {
-        strcat(buffer, argv[i]);
+        if (strlen(buffer) + strlen(argv[i]) <= MAX_MESSAGE_LEN - 1)
+            strcat(buffer, argv[i]);
+        else {
+            fprintf(stderr, "Message too long, saved partial\n");
+            return -10;
+        }
 
         if (i != argc - 1) {
             strcat(buffer, " ");
@@ -49,7 +54,6 @@ int savemessage (char* buffer) {
     time_t date;
     struct tm *date_tm;
     char   date_s[32];
-    int    buffersize;
     int    i = 0;
 
     date = time(NULL);
@@ -74,7 +78,7 @@ int savemessage (char* buffer) {
         return -7;
     }
 
-    while (buffer[i] != NULL)
+    while (buffer[i] != '\0')
         i++;
 
     fputs(date_s, logfile_fp);

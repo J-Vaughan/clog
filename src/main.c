@@ -18,7 +18,7 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.5.11
+// Version: 0.6.0
 
 #include <stdio.h>
 #include <string.h>
@@ -34,18 +34,21 @@ int main (int argc, char* argv[])
 {
     char* message_buffer = malloc(MAX_MESSAGE_LEN);
     FILE* test_fp;
+    int   result;
 
     if (argc == 1) {
         fprintf(stderr, "Usage: clog <message>\n");
         return -1;
     }
 
-    if (parsemessage(argc, argv, message_buffer) != 0) {
+    result = parsemessage(argc, argv, message_buffer);
+    if (result != 0 && result != -10) {
         fprintf(stderr, "Unable to parse message\n");
         return -2;
     }
 
-    if (savemessage(message_buffer) != 0) {
+    result = savemessage(message_buffer);
+    if (result != 0) {
         fprintf(stderr, "Unable to save message\n");
         return -4;
     }

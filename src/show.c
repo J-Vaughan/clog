@@ -18,65 +18,57 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.5.11
+// Version: 0.6.0
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/stat.h>
+#include <string.h>
 
 #include "show.h"
 #include "limits.h"
 
 int show (int amount, FILE* log_fp) {
     char* buffer;
-    unsigned long unixtime;
-    int log_fn;
-    struct stat log_st;
-    long long log_size;
-    int iterator = 1;
-    int looper = 0;
+    long length;
+    char for_buf;
 
-    log_fn = fileno(log_fp);
-
-    if (fstat(log_fn, &log_st) != 0) {
-        fprintf(stderr, "Couldn't get log files stats\n");
-        return -8;
-    }
-
-    log_size = (long long) log_st.st_size;
-
-    buffer = malloc(MAX_MESSAGE_LEN);
+    buffer = malloc(6);
 
     // TODO: handle fseek errors
 
-    RETRY:
+    fseek(log_fp, -2, SEEK_END);
 
-    fseek(log_fp, -iterator, SEEK_END);
-
-    if (fgetc(log_fp) != '^') {
-        looper++;
-        iterator++;
-        if (iterator >= 5) {
-            fprintf(stderr, "Couldn't find ending caret\n");
-            return -9;
+    for (int i = 0; i < 5; i++) {
+        for_buf = fgetc(log_fp);
+        if (for_buf != '$') {                                                   // if current character isn't $
+            if (i != 0) {                                                         // if current index isn't 0
+                buffer[6] = buffer[i - 1];                                          // slot 1 of buffer is index - 1 of length
+                buffer[i] = buffer[6];                                              // slot index of length is slot 1 of buffer
+                buffer[i - 1] = for_buf;                                            // slot index - 1 of length is current character
+                fseek(log_fp, -2, SEEK_CUR);                                        // go back 1 character (for reading)
+            }
+            else{                                                                 // else if current index is 0
+                buffer[i] = for_buf;                                                // slot index of length is
+                fseek(log_fp, -2, SEEK_CUR);
+            }
         }
-        goto RETRY;
+        else {
+            buffer[i + 1] = '\0';
+            break;
+        }
     }
 
-    iterator += 1;
+    length = strtol(buffer, &buffer+6, 10);
 
-    fseek(log_fp, -iterator, SEEK_END);
-
-    CAPTURE:
-
-    if (iterator >= MAX_MESSAGE_LEN - 2) goto END;
-
-    buffer[iterator - 3] = fgetc(log_fp);
-    printf("%c at %i\n", buffer[iterator - 3], iterator);
+    printf("length = %lu\n", length);
 
     free(buffer);
 
-    END:
+    buffer = calloc(MAX_MESSAGE_LEN + DATE_LEN + 4, 1);
+
+    fseek(log_fp, -(length + 2), SEEK_CUR);
+
+    free(buffer);
 
     return 0;
 }

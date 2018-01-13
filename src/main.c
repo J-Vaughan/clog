@@ -18,7 +18,7 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.6.0
+// Version: 0.6.1
 
 #include <stdio.h>
 #include <string.h>
@@ -33,7 +33,7 @@
 int main (int argc, char* argv[])
 {
     char* message_buffer = malloc(MAX_MESSAGE_LEN);
-    FILE* test_fp;
+    FILE* log_fp;
     int   result;
 
     if (argc == 1) {
@@ -52,16 +52,14 @@ int main (int argc, char* argv[])
         fprintf(stderr, "Unable to save message\n");
         return -4;
     }
+    
+    log_fp = fopen("log/logfile", "r");
 
-    cmdecho(message_buffer);
+    show(1, log_fp);
 
     free(message_buffer);
 
-    test_fp = fopen("log/logfile", "r");
-
-    show(1, test_fp);
-
-    fclose(test_fp);
+    fclose(log_fp);
 
     return 0;
 }

@@ -18,7 +18,7 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.6.0
+// Version: 0.6.1
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,17 +38,18 @@ int show (int amount, FILE* log_fp) {
 
     fseek(log_fp, -2, SEEK_END);
 
+    // DOCUMENT: !!
     for (int i = 0; i < 5; i++) {
         for_buf = fgetc(log_fp);
-        if (for_buf != '$') {                                                   // if current character isn't $
-            if (i != 0) {                                                         // if current index isn't 0
-                buffer[6] = buffer[i - 1];                                          // slot 1 of buffer is index - 1 of length
-                buffer[i] = buffer[6];                                              // slot index of length is slot 1 of buffer
-                buffer[i - 1] = for_buf;                                            // slot index - 1 of length is current character
-                fseek(log_fp, -2, SEEK_CUR);                                        // go back 1 character (for reading)
+        if (for_buf != '$') {
+            if (i != 0) {
+                buffer[6] = buffer[i - 1];
+                buffer[i] = buffer[6];
+                buffer[i - 1] = for_buf;
+                fseek(log_fp, -2, SEEK_CUR);
             }
-            else{                                                                 // else if current index is 0
-                buffer[i] = for_buf;                                                // slot index of length is
+            else{
+                buffer[i] = for_buf;
                 fseek(log_fp, -2, SEEK_CUR);
             }
         }
@@ -60,13 +61,16 @@ int show (int amount, FILE* log_fp) {
 
     length = strtol(buffer, &buffer+6, 10);
 
-    printf("length = %lu\n", length);
-
     free(buffer);
 
     buffer = calloc(MAX_MESSAGE_LEN + DATE_LEN + 4, 1);
 
-    fseek(log_fp, -(length + 2), SEEK_CUR);
+    fseek(log_fp, -(length + DATE_LEN + 3), SEEK_CUR);
+
+    // TODO: errcheck
+    fgets(buffer, length + DATE_LEN + 2, log_fp);
+
+    puts(buffer);
 
     free(buffer);
 

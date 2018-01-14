@@ -18,7 +18,7 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.6.2
+// Version: 0.7.0
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,6 +31,7 @@ int show (int amount, FILE* log_fp) {
     char* buffer;
     long length;
     char for_buf;
+    int  offset;
 
     buffer = malloc(6);
 
@@ -63,16 +64,16 @@ int show (int amount, FILE* log_fp) {
 
     free(buffer);
 
-    buffer = calloc(MAX_MESSAGE_LEN + DATE_LEN + 4, 1);
+    offset = length + DATE_LEN + 1;
 
-    fseek(log_fp, -(length + DATE_LEN + 3), SEEK_CUR);
+    fseek(log_fp, -(offset + 2), SEEK_CUR);
 
-    // TODO: errcheck
-    fgets(buffer, length + DATE_LEN + 2, log_fp);
+    for (int i = 0; i < offset; i++) {
+        char index = fgetc(log_fp);
+        putc(index, stdout);
+    }
 
-    puts(buffer);
-
-    free(buffer);
+    putc('\n', stdout);
 
     return 0;
 }

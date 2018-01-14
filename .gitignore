@@ -1,3 +1,7 @@
+# Damned vim swaps
+*~
+*.sw*
+
 # Log output
 log/logfile
 

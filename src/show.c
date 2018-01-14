@@ -18,7 +18,7 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.7.0
+// Version: 0.7.1
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,47 +33,57 @@ int show (int amount, FILE* log_fp) {
     char for_buf;
     int  offset;
 
-    buffer = malloc(6);
-
     // TODO: handle fseek errors
-
     fseek(log_fp, -2, SEEK_END);
 
-    // DOCUMENT: !!
-    for (int i = 0; i < 5; i++) {
-        for_buf = fgetc(log_fp);
-        if (for_buf != '$') {
-            if (i != 0) {
-                buffer[6] = buffer[i - 1];
-                buffer[i] = buffer[6];
-                buffer[i - 1] = for_buf;
-                fseek(log_fp, -2, SEEK_CUR);
+    while (amount > 0) {
+        
+        buffer = calloc(6, 1);
+
+        // DOCUMENT: !!
+        for (int i = 0; i <= 5; i++) {
+            for_buf = fgetc(log_fp);
+            if (for_buf != '$') {
+                if (i == 5) {
+                    fprintf(stderr, "Couldn't find previous message length\n");
+                    return -9;
+                }
+                if (i != 0) {
+                    buffer[6] = buffer[i - 1];
+                    buffer[i] = buffer[6];
+                    buffer[i - 1] = for_buf;
+                    fseek(log_fp, -2, SEEK_CUR);
+                }
+                else{
+                    buffer[i] = for_buf;
+                    fseek(log_fp, -2, SEEK_CUR);
+                }
             }
-            else{
-                buffer[i] = for_buf;
-                fseek(log_fp, -2, SEEK_CUR);
+            else {
+                buffer[i + 1] = '\0';
+                break;
             }
         }
-        else {
-            buffer[i + 1] = '\0';
-            break;
+
+        length = strtol(buffer, &buffer+6, 10);
+
+        free(buffer);
+
+        offset = length + DATE_LEN + 1;
+
+        fseek(log_fp, -(offset + 2), SEEK_CUR);
+
+        for (int i = 0; i < offset; i++) {
+            char index = fgetc(log_fp);
+            putc(index, stdout);
         }
+
+        putc('\n', stdout);
+
+        fseek(log_fp, -(offset + 2), SEEK_CUR);
+
+        amount--;
     }
-
-    length = strtol(buffer, &buffer+6, 10);
-
-    free(buffer);
-
-    offset = length + DATE_LEN + 1;
-
-    fseek(log_fp, -(offset + 2), SEEK_CUR);
-
-    for (int i = 0; i < offset; i++) {
-        char index = fgetc(log_fp);
-        putc(index, stdout);
-    }
-
-    putc('\n', stdout);
 
     return 0;
 }

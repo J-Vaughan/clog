@@ -31,7 +31,7 @@ $ sudo make uninstall
 
 ## License
 
-This program is licensed under the GNU General Public License 3. The
+This program is licensed under the GNU GPL v3,0. The
 full terms can be found in [LICENSE](LICENSE).
 
 ## Name

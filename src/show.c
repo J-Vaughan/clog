@@ -18,7 +18,7 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.7.2
+// Version: 0.7.2a
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,7 +38,7 @@ int show (int amount, FILE* log_fp) {
     fseek(log_fp, -2, SEEK_END);
 
     while (amount > 0) {
-        
+
         buffer = calloc(6, 1);
 
         // DOCUMENT: !!
@@ -77,7 +77,7 @@ int show (int amount, FILE* log_fp) {
         for (int i = 0; i < offset; i++) {
             char index = fgetc(log_fp);
             if (i == 0)
-                printf(ANSI_BLUE);
+                printf(ANSI_CYAN);
             else if (i == DATE_LEN)
                 printf(ANSI_RESET);
             putc(index, stdout);

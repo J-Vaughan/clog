@@ -18,7 +18,7 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.7.1
+// Version: 0.7.2
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,6 +26,7 @@
 
 #include "show.h"
 #include "limits.h"
+#include "colours.h"
 
 int show (int amount, FILE* log_fp) {
     char* buffer;
@@ -75,6 +76,10 @@ int show (int amount, FILE* log_fp) {
 
         for (int i = 0; i < offset; i++) {
             char index = fgetc(log_fp);
+            if (i == 0)
+                printf(ANSI_BLUE);
+            else if (i == DATE_LEN)
+                printf(ANSI_RESET);
             putc(index, stdout);
         }
 

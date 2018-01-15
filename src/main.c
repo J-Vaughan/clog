@@ -18,7 +18,7 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.6.2
+// Version: 0.7.0
 
 #include <stdio.h>
 #include <string.h>
@@ -37,7 +37,7 @@ int main (int argc, char* argv[])
     int   result;
 
     if (argc == 1) {
-        fprintf(stderr, "Usage: clog <message>\n");
+        fprintf(stderr, "Usage: clog [options] message text...\n");
         return -1;
     }
 
@@ -52,7 +52,7 @@ int main (int argc, char* argv[])
         fprintf(stderr, "Unable to save message\n");
         return -4;
     }
-    
+
     log_fp = fopen("log/logfile", "r");
 
     show(1, log_fp);

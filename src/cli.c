@@ -18,13 +18,21 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.6.2
+// Version: 0.7.0
 
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 
 #include "cli.h"
+#include "colours.h"
+
+int help () {
+    #include "help.txt"
+    puts(helptxt);
+
+    return 0;
+}
 
 /* OLD *************************************************************************
  * int cmdecho (char* buffer) { // TODO: replace this with (pseudo) show(1)
@@ -32,10 +40,10 @@
  *         fprintf(stderr, "Couldn't echo message\n");
  *         return -3;
  *     }
- * 
+ *
  *     return 0;
  * }
- * 
+ *
  * int confirm (const char* prompt) {
  *     if (prompt != NULL) {
  *         printf("%s (y/n): ", prompt);
@@ -49,7 +57,7 @@
  *     else {
  *         printf("Confirm? (y/n): ");
  *         fgetc(stdin);
- * 
+ *
  *         if (fgetc(stdin) == 121) {
  *             return 0;
  *         }

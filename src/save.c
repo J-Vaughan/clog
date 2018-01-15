@@ -18,6 +18,8 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+// Version: 0.6.2
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -27,11 +29,16 @@
 #include <unistd.h>
 
 #include "save.h"
+#include "limits.h"
 
 int parsemessage (int argc, char* argv[], char* buffer) {
-
     for (int i = 1; i < argc; i++) {
-        strcat(buffer, argv[i]);
+        if (strlen(buffer) + strlen(argv[i]) <= MAX_MESSAGE_LEN - 1)
+            strcat(buffer, argv[i]);
+        else {
+            fprintf(stderr, "Message too long, saved partial\n");
+            return -10;
+        }
 
         if (i != argc - 1) {
             strcat(buffer, " ");
@@ -42,16 +49,17 @@ int parsemessage (int argc, char* argv[], char* buffer) {
 }
 
 int savemessage (char* buffer) {
-    FILE* logfile_fp;
-    char* filename = "log/logfile";
-    char* unixtime;
+    FILE*  logfile_fp;
+    char*  filename = "log/logfile"; // TODO: user-configurable
+    time_t date;
+    struct tm *date_tm;
+    char   date_s[32];
+    int    i = 0;
 
-    unixtime = malloc(16);
+    date = time(NULL);
+    date_tm = localtime(&date);
 
-    if (sprintf(unixtime, "%lu: ", (unsigned long) time(NULL)) < 0) {
-        fprintf(stderr, "Couldn't time\n");
-        return -5;
-    }
+    strftime(date_s, sizeof(date_s), "%c> ", date_tm); // TODO: error code -5
 
     if (access("log/", W_OK) != 0) {
         if (mkdir("log", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0) {
@@ -70,15 +78,17 @@ int savemessage (char* buffer) {
         return -7;
     }
 
-    fputs(unixtime, logfile_fp);
-    fputs(buffer, logfile_fp);
+    while (buffer[i] != '\0')
+        i++;
 
-    fputc(94, logfile_fp); // ^
-    fputc(10, logfile_fp); // \cr
+    fputs(date_s, logfile_fp);
+    fputs(buffer, logfile_fp);
+    fprintf(logfile_fp, " $%i\n", i);
+
+    // TODO: check if windows and crlf as necessary >> alternatively, not needed since printf does stuff
+    // fputc(10, logfile_fp); // \lf
 
     fclose(logfile_fp);
-
-    free(unixtime);
 
     return 0;
 }

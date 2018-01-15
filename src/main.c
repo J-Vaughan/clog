@@ -18,6 +18,8 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+// Version: 0.6.2
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -29,38 +31,35 @@
 #include "limits.h"
 
 int main (int argc, char* argv[])
-{   
+{
     char* message_buffer = malloc(MAX_MESSAGE_LEN);
-    FILE* test_fp;
+    FILE* log_fp;
+    int   result;
 
     if (argc == 1) {
         fprintf(stderr, "Usage: clog <message>\n");
         return -1;
     }
 
-    if (argv[1][0] == '-') {
-        printf("- detected\n");
-    }
-
-    if (parsemessage(argc, argv, message_buffer) != 0) {
+    result = parsemessage(argc, argv, message_buffer);
+    if (result != 0 && result != -10) {
         fprintf(stderr, "Unable to parse message\n");
         return -2;
     }
 
-    if (savemessage(message_buffer) != 0) {
+    result = savemessage(message_buffer);
+    if (result != 0) {
         fprintf(stderr, "Unable to save message\n");
         return -4;
     }
 
-    cmdecho(message_buffer);
+    log_fp = fopen("log/logfile", "r");
+
+    show(1, log_fp);
 
     free(message_buffer);
 
-    test_fp = fopen("log/logfile", "r");
-
-    show(1, test_fp);
-
-    fclose(test_fp);
+    fclose(log_fp);
 
     return 0;
 }

@@ -18,40 +18,44 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+// Version: 0.6.2
+
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 
 #include "cli.h"
 
-int cmdecho (char* buffer) {
-    if (printf("\033[34;1m" "%lu: " "\033[0m" "%s\n", (unsigned long) time(NULL), buffer) < 0) {
-        fprintf(stderr, "Couldn't echo message\n");
-        return -3;
-    }
-
-    return 0;
-}
-
-int confirm (const char* prompt) {
-    if (prompt != NULL) {
-        printf("%s (y/n): ", prompt);
-        if (fgetc(stdin) == 121) {
-            return 0;
-        }
-        else {
-            return -1;
-        }
-    }
-    else {
-        printf("Confirm? (y/n): ");
-        fgetc(stdin);
-
-        if (fgetc(stdin) == 121) {
-            return 0;
-        }
-        else {
-            return -1;
-        }
-    }
-}
+/* OLD *************************************************************************
+ * int cmdecho (char* buffer) { // TODO: replace this with (pseudo) show(1)
+ *     if (printf("\033[34;1m" "%lu: " "\033[0m" "%s\n", (unsigned long) time(NULL), buffer) < 0) {
+ *         fprintf(stderr, "Couldn't echo message\n");
+ *         return -3;
+ *     }
+ * 
+ *     return 0;
+ * }
+ * 
+ * int confirm (const char* prompt) {
+ *     if (prompt != NULL) {
+ *         printf("%s (y/n): ", prompt);
+ *         if (fgetc(stdin) == 121) {
+ *             return 0;
+ *         }
+ *         else {
+ *             return -1;
+ *         }
+ *     }
+ *     else {
+ *         printf("Confirm? (y/n): ");
+ *         fgetc(stdin);
+ * 
+ *         if (fgetc(stdin) == 121) {
+ *             return 0;
+ *         }
+ *         else {
+ *             return -1;
+ *         }
+ *     }
+ * }
+ ******************************************************************************/

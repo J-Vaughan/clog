@@ -18,13 +18,22 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.6.2
-
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 
 #include "cli.h"
+
+int options (int argc, char* argv[]) {
+    for (int i = 1; i < argc; i++) {
+        if (argv[i][0] == '-')
+            return 0;
+        else if (i == argc - 1)
+            return 1;
+    }
+
+    return -1;
+}
 
 /* OLD *************************************************************************
  * int cmdecho (char* buffer) { // TODO: replace this with (pseudo) show(1)

@@ -18,8 +18,6 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.6.2
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -29,6 +27,7 @@
 #include "cli.h"
 #include "show.h"
 #include "limits.h"
+#include "boolean.h"
 
 int main (int argc, char* argv[])
 {
@@ -40,6 +39,12 @@ int main (int argc, char* argv[])
         fprintf(stderr, "Usage: clog <message>\n");
         return -1;
     }
+
+    result = options(argc, argv);
+    if (result == TRUE);
+    else if (result == FALSE);
+    else if (result == ERR)
+        return -11;
 
     result = parsemessage(argc, argv, message_buffer);
     if (result != 0 && result != -10) {

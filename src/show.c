@@ -18,8 +18,6 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.7.2
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

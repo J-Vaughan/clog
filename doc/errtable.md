@@ -34,6 +34,7 @@ You can contact me at dev.jamesvaughan@gmail.com with any questions
 |         -8 | `fstat` returned an error                                       |
 |         -9 | Couldn't find line size                                         |
 |        -10 | Message was too long, but con'd successfully                    |
+|        -11 | Finding options failed                                          |
 <!----------------------------------------------------------------------------->
 
 Add rows as necessary.

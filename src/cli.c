@@ -25,6 +25,7 @@
 
 #include "cli.h"
 #include "eoptions.h"
+#include "colours.h"
 
 int options (int argc, char* argv[]) {
     char* argi[argc];
@@ -49,13 +50,18 @@ int options (int argc, char* argv[]) {
             if (v > 0) {
                 SHOW_OPTION = 1;
                 SHOW_VALUE  = v;
-                puts("Show yes");
-                printf("VALUE = %i\n", SHOW_VALUE);
             }
         }
     }
 
     return 1;
+}
+
+int help () {
+    #include "help.txt"
+    puts(helptxt);
+
+    return 0;
 }
 
 /* OLD *************************************************************************
@@ -64,10 +70,10 @@ int options (int argc, char* argv[]) {
  *         fprintf(stderr, "Couldn't echo message\n");
  *         return -3;
  *     }
- * 
+ *
  *     return 0;
  * }
- * 
+ *
  * int confirm (const char* prompt) {
  *     if (prompt != NULL) {
  *         printf("%s (y/n): ", prompt);
@@ -81,7 +87,7 @@ int options (int argc, char* argv[]) {
  *     else {
  *         printf("Confirm? (y/n): ");
  *         fgetc(stdin);
- * 
+ *
  *         if (fgetc(stdin) == 121) {
  *             return 0;
  *         }

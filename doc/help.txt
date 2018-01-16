@@ -1,0 +1,8 @@
+// Version: 0.7.0
+
+char* helptxt = "\
+Usage: clog [options] message text...\n\
+Options:\n\
+    --help              Display this information\
+"
+;

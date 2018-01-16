@@ -40,7 +40,7 @@ main.o:	main.c
 database.o: database.c
 	$(CC) $(CFLAGS) -c src/database.c $(INCLUDES) $(LIBRARIES)
 
-cli.o: cli.c
+cli.o: cli.c help.txt
 	$(CC) $(CFLAGS) -c src/cli.c $(INCLUDES) $(LIBRARIES)
 
 save.o: save.c

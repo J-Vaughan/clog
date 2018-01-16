@@ -37,7 +37,7 @@ int main (int argc, char* argv[])
     int   result;
 
     if (argc == 1) {
-        fprintf(stderr, "Usage: clog <message>\n");
+        fprintf(stderr, "Usage: clog [options] message text...\n");
         return -1;
     }
 

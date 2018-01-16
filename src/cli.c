@@ -41,7 +41,9 @@ int options (int argc, char* argv[]) {
     for (int i = 1; i < argc; i++) {
         if (argv[i][0] == '-') {
             argi[ii] = argv[i];
-            argl[ii] = argv[i + 1];
+            if (i + 1 <= argc)
+                argl[ii] = argv[i + 1];
+            else argl[ii] = NULL;
             ii++;
         }
         else if (ii == 0) return 0;
@@ -49,17 +51,31 @@ int options (int argc, char* argv[]) {
 
     for (int i = 0; i < ii; i++) {
         if (argi[i][1] == 's' || (argi[i][1] == '-' && argi[i][2] == 's')) {
-            int v = strtol(argl[i], &trash, 10);
+            if (argl[i] != NULL) {
+                int v = strtol(argl[i], &trash, 10);
 
-            if (v > 0) {
-                if (v > MAX_SHOW) {
-                    v = MAX_SHOW;
-                    fprintf(stderr, ANSI_RED "Show limit is %i\n" ANSI_RESET, MAX_SHOW);
+                if (v > 0) {
+                    if (v > MAX_SHOW) {
+                        v = MAX_SHOW;
+                        fprintf(stderr, ANSI_RED "Show limit is %i\n" ANSI_RESET, MAX_SHOW);
+                    }
+
+                    SHOW_OPTION = TRUE;
+                    SHOW_VALUE  = v;
                 }
+                else if (v == 0) goto NULLERR;
+            }
+            else {
+                NULLERR:
+                fprintf(stderr, ANSI_RED
+                        "Couldn't find amount of entries to show.\n"
+                        "Defaulting to %i...\n"
+                        ANSI_RESET,
+                        SHOW_DEFAULT);
 
                 SHOW_OPTION = TRUE;
-                SHOW_VALUE  = v;
-            }
+                SHOW_VALUE  = SHOW_DEFAULT;
+            } 
         }
         else if (argi[i][1] == 'h' || (argi[i][1] == '-' && argi[i][2] == 'h'))
             HELP = TRUE;

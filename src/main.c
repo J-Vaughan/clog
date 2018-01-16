@@ -63,7 +63,7 @@ int main (int argc, char* argv[])
 
     if (SHOW_OPTION == TRUE) {
         show(SHOW_VALUE, log_fp);
-	goto END;
+	    goto END;
     }
 
     show(1, log_fp);

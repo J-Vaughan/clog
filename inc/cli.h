@@ -3,6 +3,7 @@
 
 int options (int argc, char* argv[]);
 int help ();
+int version ();
 
 /* OLD *************************************************************************
  * int cmdecho (char* message_buffer);

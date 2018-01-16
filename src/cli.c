@@ -1,6 +1,6 @@
 /* LICENSE AND CONTACT INFORMATION * * * * * * * * * * * * * * * * * * * * * * *
  * CLog, a logging tool written in C                                           *
- * Copyright (C) 2017 James Vaughan                                            *
+ * Copyright (C) 2018 James Vaughan                                            *
  *                                                                             *
  * This program is free software: you can redistribute it and/or modify        *
  * it under the terms of the GNU General Public License as published by        *
@@ -26,6 +26,9 @@
 #include "cli.h"
 #include "eoptions.h"
 #include "colours.h"
+#include "limits.h"
+#include "boolean.h"
+#include "version.h"
 
 int options (int argc, char* argv[]) {
     char* argi[argc];
@@ -45,12 +48,26 @@ int options (int argc, char* argv[]) {
     }
 
     for (int i = 0; i < ii; i++) {
-        if (argi[i][1] == 's') {
+        if (argi[i][1] == 's' || (argi[i][1] == '-' && argi[i][2] == 's')) {
             int v = strtol(argl[i], &trash, 10);
+
             if (v > 0) {
-                SHOW_OPTION = 1;
+                if (v > MAX_SHOW) {
+                    v = MAX_SHOW;
+                    fprintf(stderr, ANSI_RED "Show limit is %i\n" ANSI_RESET, MAX_SHOW);
+                }
+
+                SHOW_OPTION = TRUE;
                 SHOW_VALUE  = v;
             }
+        }
+        else if (argi[i][1] == 'h' || (argi[i][1] == '-' && argi[i][2] == 'h'))
+            HELP = TRUE;
+        else if (argi[i][1] == 'v' || (argi[i][1] == '-' && argi[i][2] == 'v'))
+            VERSION = TRUE;
+        else {
+            fprintf(stderr, "%s is not a valid command\n", argi[i]);
+            return -1;
         }
     }
 
@@ -61,6 +78,11 @@ int help () {
     #include "help.txt"
     puts(helptxt);
 
+    return 0;
+}
+
+int version() {
+    printf("CLog v%i.%i.%i\n", V_MAJOR, V_MINOR, v_PATCH);
     return 0;
 }
 

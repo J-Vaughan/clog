@@ -1,6 +1,6 @@
 /* LICENSE AND CONTACT INFORMATION * * * * * * * * * * * * * * * * * * * * * * *
  * CLog, a logging tool written in C                                           *
- * Copyright (C) 2017 James Vaughan                                            *
+ * Copyright (C) 2018 James Vaughan                                            *
  *                                                                             *
  * This program is free software: you can redistribute it and/or modify        *
  * it under the terms of the GNU General Public License as published by        *
@@ -32,7 +32,7 @@
 
 int main (int argc, char* argv[])
 {
-    char* message_buffer = malloc(MAX_MESSAGE_LEN);
+    char* message_buffer;
     FILE* log_fp;
     int   result;
 
@@ -43,9 +43,29 @@ int main (int argc, char* argv[])
 
     result = options(argc, argv);
     if (result == TRUE);
-    else if (result == FALSE);
+    else if (result == FALSE) goto NOOPTIONS;
     else if (result == ERR)
         return -11;
+
+    if (SHOW_OPTION == TRUE) {
+        log_fp = fopen("log/logfile", "r");
+        show(SHOW_VALUE, log_fp);
+	    goto FEND;
+    }
+
+    if (HELP == TRUE) {
+        help();
+        goto END;
+    }
+
+    if (VERSION == TRUE) {
+        version();
+        goto END;
+    }
+
+    NOOPTIONS:
+
+    message_buffer = malloc(MAX_MESSAGE_LEN);
 
     result = parsemessage(argc, argv, message_buffer);
     if (result != 0 && result != -10) {
@@ -61,18 +81,15 @@ int main (int argc, char* argv[])
 
     log_fp = fopen("log/logfile", "r");
 
-    if (SHOW_OPTION == TRUE) {
-        show(SHOW_VALUE, log_fp);
-	    goto END;
-    }
-
     show(1, log_fp);
-
-    END:
 
     free(message_buffer);
 
+    FEND:
+
     fclose(log_fp);
+
+    END:
 
     return 0;
 }

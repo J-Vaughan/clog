@@ -26,7 +26,7 @@ LIBRARIES =
 VPATH = .:./inc:./src
 TARGET = clog
 
-$(TARGET): bindir |  main.o database.o cli.o save.o show.o
+$(TARGET): bindir |  main.o database.o cli.o save.o show.o Makefile
 	$(CC) $(CFLAGS) -o bin/$(TARGET) $(INCLUDES) $(LIBRARIES) main.o database.o cli.o save.o show.o
 
 bindir:

@@ -1,6 +1,6 @@
 /* LICENSE AND CONTACT INFORMATION * * * * * * * * * * * * * * * * * * * * * * *
  * CLog, a logging tool written in C                                           *
- * Copyright (C) 2017 James Vaughan <dev.jamesvaughan@gmail.com>               *
+ * Copyright (C) 2018 James Vaughan                                            *
  *                                                                             *
  * This program is free software: you can redistribute it and/or modify        *
  * it under the terms of the GNU General Public License as published by        *
@@ -14,6 +14,6 @@
  *                                                                             *
  * You should have received a copy of the GNU General Public License           *
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.       *
+ *                                                                             *
+ * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-// Version 0.5.8

@@ -1,8 +1,9 @@
-// Version: 0.7.0
-
 char* helptxt = "\
-Usage: clog [options] message text...\n\
+Usage: clog [--version] [--help] [-s <number>] message text...\n\
 Options:\n\
-    --help              Display this information\
+    -h, --help          Display this information\n\
+    -v, --version       Displays current version number\n\
+    \n\
+    -s, --show          Shows a number of previous entries\
 "
 ;

@@ -1,3 +1,6 @@
+# Hardlinked version number
+version.h
+
 # Damned vim swaps
 *~
 *.sw*

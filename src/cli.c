@@ -1,6 +1,6 @@
 /* LICENSE AND CONTACT INFORMATION * * * * * * * * * * * * * * * * * * * * * * *
  * CLog, a logging tool written in C                                           *
- * Copyright (C) 2017 James Vaughan                                            *
+ * Copyright (C) 2018 James Vaughan                                            *
  *                                                                             *
  * This program is free software: you can redistribute it and/or modify        *
  * it under the terms of the GNU General Public License as published by        *
@@ -18,19 +18,87 @@
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Version: 0.7.0
-
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <stdlib.h>
 
 #include "cli.h"
+#include "eoptions.h"
 #include "colours.h"
+#include "limits.h"
+#include "boolean.h"
+#include "version.h"
+
+int options (int argc, char* argv[]) {
+    char* argi[argc];
+    char* argl[argc];
+    int ii = 0;
+    char* trash;
+
+    trash = malloc(16);
+
+    for (int i = 1; i < argc; i++) {
+        if (argv[i][0] == '-') {
+            argi[ii] = argv[i];
+            if (i + 1 <= argc)
+                argl[ii] = argv[i + 1];
+            else argl[ii] = NULL;
+            ii++;
+        }
+        else if (ii == 0) return 0;
+    }
+
+    for (int i = 0; i < ii; i++) {
+        if (argi[i][1] == 's' || (argi[i][1] == '-' && argi[i][2] == 's')) {
+            if (argl[i] != NULL) {
+                int v = strtol(argl[i], &trash, 10);
+
+                if (v > 0) {
+                    if (v > MAX_SHOW) {
+                        v = MAX_SHOW;
+                        fprintf(stderr, ANSI_RED "Show limit is %i\n" ANSI_RESET, MAX_SHOW);
+                    }
+
+                    SHOW_OPTION = TRUE;
+                    SHOW_VALUE  = v;
+                }
+                else if (v == 0) goto NULLERR;
+            }
+            else {
+                NULLERR:
+                fprintf(stderr, ANSI_RED
+                        "Couldn't find amount of entries to show.\n"
+                        "Defaulting to %i...\n"
+                        ANSI_RESET,
+                        SHOW_DEFAULT);
+
+                SHOW_OPTION = TRUE;
+                SHOW_VALUE  = SHOW_DEFAULT;
+            } 
+        }
+        else if (argi[i][1] == 'h' || (argi[i][1] == '-' && argi[i][2] == 'h'))
+            HELP = TRUE;
+        else if (argi[i][1] == 'v' || (argi[i][1] == '-' && argi[i][2] == 'v'))
+            VERSION = TRUE;
+        else {
+            fprintf(stderr, "%s is not a valid command\n", argi[i]);
+            return -1;
+        }
+    }
+
+    return 1;
+}
 
 int help () {
     #include "help.txt"
     puts(helptxt);
 
+    return 0;
+}
+
+int version() {
+    printf("CLog v%i.%i.%i\n", V_MAJOR, V_MINOR, v_PATCH);
     return 0;
 }
 

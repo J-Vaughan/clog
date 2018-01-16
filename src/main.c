@@ -28,6 +28,7 @@
 #include "show.h"
 #include "limits.h"
 #include "boolean.h"
+#include "options.h"
 
 int main (int argc, char* argv[])
 {
@@ -60,7 +61,14 @@ int main (int argc, char* argv[])
 
     log_fp = fopen("log/logfile", "r");
 
+    if (SHOW_OPTION == TRUE) {
+        show(SHOW_VALUE, log_fp);
+	goto END;
+    }
+
     show(1, log_fp);
+
+    END:
 
     free(message_buffer);
 

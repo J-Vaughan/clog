@@ -21,18 +21,41 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <stdlib.h>
 
 #include "cli.h"
+#include "eoptions.h"
 
 int options (int argc, char* argv[]) {
+    char* argi[argc];
+    char* argl[argc];
+    int ii = 0;
+    char* trash;
+
+    trash = malloc(16);
+
     for (int i = 1; i < argc; i++) {
-        if (argv[i][0] == '-')
-            return 0;
-        else if (i == argc - 1)
-            return 1;
+        if (argv[i][0] == '-') {
+            argi[ii] = argv[i];
+            argl[ii] = argv[i + 1];
+            ii++;
+        }
+        else if (ii == 0) return 0;
     }
 
-    return -1;
+    for (int i = 0; i < ii; i++) {
+        if (argi[i][1] == 's') {
+            int v = strtol(argl[i], &trash, 10);
+            if (v > 0) {
+                SHOW_OPTION = 1;
+                SHOW_VALUE  = v;
+                puts("Show yes");
+                printf("VALUE = %i\n", SHOW_VALUE);
+            }
+        }
+    }
+
+    return 1;
 }
 
 /* OLD *************************************************************************

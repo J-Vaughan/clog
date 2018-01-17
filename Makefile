@@ -60,3 +60,8 @@ install:
 .PHONY: uninstall
 uninstall:
 	rm -f /usr/bin/clog
+
+.PHONY: dev
+dev:
+	make
+	make clean

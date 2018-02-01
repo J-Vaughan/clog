@@ -26,8 +26,9 @@ LIBRARIES =
 VPATH = .:./inc:./src
 TARGET = clog
 
-$(TARGET): bindir |  main.o database.o cli.o save.o show.o Makefile
-	$(CC) $(CFLAGS) -o bin/$(TARGET) $(INCLUDES) $(LIBRARIES) main.o database.o cli.o save.o show.o
+$(TARGET): bindir |  main.o database.o cli.o save.o show.o utilities.o Makefile
+	$(CC) $(CFLAGS) -o bin/$(TARGET) $(INCLUDES) $(LIBRARIES) main.o \
+	    database.o cli.o save.o show.o utilities.o
 
 bindir:
 	@if [ ! -d "bin" ]; \
@@ -48,6 +49,9 @@ save.o: save.c
 
 show.o: show.c
 	$(CC) $(CFLAGS) -c src/show.c $(INCLUDES) $(LIBRARIES)
+
+utilities.o: utilities.c
+	$(CC) $(CFLAGS) -c src/utilities.c $(INCLUDES) $(LIBRARIES)
 
 .PHONY: clean
 clean:

@@ -19,61 +19,28 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-#include "show.h"
-#include "limits.h"
-#include "colours.h"
 #include "utilities.h"
 
-int show (int amount, FILE* log_fp) {
-    char* buffer;
-    long length;
-    char for_buf;
-    int  offset;
+char* reversestring (char* str) { // Thanks to paxdiablo
+    char tmp, *src, *dst;
+    size_t len;
 
-    // TODO: accomodate cr, crlf, lf
-    // TODO: handle fseek errors
-    fseek(log_fp, -2, SEEK_END);
+    if (str != NULL) {
+        len = strlen(str);
 
-    while (amount > 0) {
+        if (len > 1) {
+            src = str;
+            dst = src + len - 1;
 
-        buffer = calloc(6, 1);
-
-        // DOCUMENT: !! (too laaaaate)
-        for (int i = 0; i < 6; i++) {
-            for_buf = fgetc(log_fp);
-            fseek(log_fp, -2, SEEK_CUR);
-
-            if (for_buf != '$')
-                buffer[i] = for_buf;
-            else break;
+            while (src < dst) {
+                tmp = *src;
+                *src++ = *dst;
+                *dst-- = tmp;
+            }
         }
-        
-        length = strtol(reversestring(buffer), &buffer+6, 10);
-
-        free(buffer);
-
-        offset = length + DATE_LEN + 1;
-
-        fseek(log_fp, -(offset), SEEK_CUR);
-
-        for (int i = 0; i < offset; i++) {
-            char index = fgetc(log_fp);
-            if (i == 0)
-                printf(ANSI_CYAN);
-            else if (i == DATE_LEN)
-                printf(ANSI_RESET);
-            putc(index, stdout);
-        }
-
-        putc('\n', stdout);
-
-        fseek(log_fp, -(offset + 2), SEEK_CUR);
-
-        amount--;
     }
-
-    return 0;
+    
+    return str;
 }

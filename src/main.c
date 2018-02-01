@@ -50,7 +50,7 @@ int main (int argc, char* argv[])
     if (SHOW_OPTION == TRUE) {
         log_fp = fopen("log/logfile", "r");
         show(SHOW_VALUE, log_fp);
-	    goto FEND;
+            goto FEND;
     }
 
     if (HELP == TRUE) {

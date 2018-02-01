@@ -98,7 +98,7 @@ int help () {
 }
 
 int version() {
-    printf("CLog v%i.%i.%i\n", V_MAJOR, V_MINOR, v_PATCH);
+    printf("CLog v%i.%i.%i\n", V_MAJOR, V_MINOR, V_PATCH);
     return 0;
 }
 

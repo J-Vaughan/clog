@@ -3,6 +3,6 @@
 
 const int V_MAJOR = 0;
 const int V_MINOR = 8;
-const int v_PATCH = 2;
+const int V_PATCH = 3;
 
 #endif

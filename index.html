@@ -1,17 +1,45 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>J-Vaughan/CLog</title>
+		<title>CLog</title>
+		
+		<link rel="stylesheet" type="text/css" 	href="site.css">
 	</head>
 
 	<body>
-		<div id="header">
+		<div class="header">
 			<h1>CLog</h1>
 			<p>Welcome to the CLog website</p>
 		</div>
 
-		<div id="readme">
-			<link rel="import" href="parsed_readme.html">
+		<h1>README.md</h1>
+		<div class="readme">
+			<h1>CLog</h1>
+			<p>Logging tool written in C</p>
+			<h2>Building</h2>
+			<p>To build the program into <code>./bin/</code></p>
+			<pre lang="sh"><code>$ make
+			</code></pre>
+			<p>To build and install the program into <code>/usr/bin/</code></p>
+			<pre lang="sh"><code>$ make
+			$ sudo make install
+			</code></pre>
+			<p>To clean build directory</p>
+			<pre lang="sh"><code>$ make clean
+			</code></pre>
+			<p>To uninstall from <code>/usr/bin/</code></p>
+			<pre lang="sh"><code>$ sudo make uninstall
+			</code></pre>
+			<h2>License</h2>
+			<p>This program is licensed under the GNU General Public License 3. The
+			full terms can be found in <a href="LICENSE">LICENSE</a>.</p>
+			<h2>Name</h2>
+			<p>The &quot;C&quot; in CLog can stand for several things:</p>
+			<ul>
+			<li>The <strong>C</strong> programming language</li>
+			<li><strong>C</strong>holesterol, which also clogs your system</li>
+			<li><strong>C</strong>rappy POS</li>
+			</ul>
 		</div>
 	</body>
 </html>

@@ -1,43 +1,13 @@
-# CLog
+# CLog gh-pages
 
-Logging tool written in C
+This is the README for the GitHub Page for CLog.
 
-## Building
+## Requirements
 
-To build the program into `./bin/`
+To install the requirements, `bundle install`.
 
-```sh
-$ make
-```
+## Workflow
 
-To build and install the program into `/usr/bin/`
-
-```sh
-$ make
-$ sudo make install
-```
-
-To clean build directory
-
-```sh
-$ make clean
-```
-
-To uninstall from `/usr/bin/`
-
-```sh
-$ sudo make uninstall
-```
-
-## License
-
-This program is licensed under the GNU General Public License 3. The
-full terms can be found in [LICENSE](LICENSE).
-
-## Name
-
-The "C" in CLog can stand for several things:
-
-* The **C** programming language
-* **C**holesterol, which also clogs your system
-* **C**rappy POS
+Every tag's code will be copied into `code`, and the various documentation will
+be parsed using RedCarpet. This text will be (for now) manually copied into the
+respective files. If the CSS has changed, compile the Sass into `site.css`.

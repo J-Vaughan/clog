@@ -24,4 +24,4 @@ $ sass src/sass/application.sass site.css
 $ ruby scripts/mdparse.rb input.md output.html
 ```
 
-The `output.html` must be manually copied to it's destination.
+The `output.html` must be manually copied to its destination.

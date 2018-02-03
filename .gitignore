@@ -9,7 +9,7 @@ version.h
 *.sw*
 
 # Log output
-log/logfile
+log
 
 # VS Code settings
 .vscode

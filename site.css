@@ -1,12 +1,9 @@
 .header {
-  margin-bottom: 1vh;
-  color: #657E84;
-  padding: 1vh 1vw; }
+  margin-bottom: 1vh; }
   .header h1 {
     font-size: 48px; }
 
 .readme {
-  background-color: #FDFCD7;
   padding: 1vh 1vw; }
 
 body {
@@ -14,7 +11,7 @@ body {
   margin: 0 auto !important;
   float: none !important;
   padding: 1vh 1vw;
-  background-color: #F4F3CD;
+  background-color: #F3ECE2;
   color: #314043;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
 

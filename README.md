@@ -11,3 +11,17 @@ To install the requirements, `bundle install`.
 Every tag's code will be copied into `code`, and the various documentation will
 be parsed using RedCarpet. This text will be (for now) manually copied into the
 respective files. If the CSS has changed, compile the Sass into `site.css`.
+
+### Compiling Sass
+
+```sh
+$ sass src/sass/application.sass site.css
+```
+
+### Parsing Markdown with RedCarpet
+
+```sh
+$ ruby scripts/mdparse.rb input.md output.html
+```
+
+The `output.html` must be manually copied to it's destination.

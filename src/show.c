@@ -39,7 +39,7 @@ int show (int amount, FILE* log_fp) {
 
     while (amount > 0) {
 
-        buffer = calloc(6, 1);
+        buffer = calloc(12, 1);
 
         // DOCUMENT: !! (too laaaaate)
         for (int i = 0; i < 6; i++) {
@@ -51,7 +51,7 @@ int show (int amount, FILE* log_fp) {
             else break;
         }
         
-        length = strtol(reversestring(buffer), &buffer+6, 10);
+        length = strtol(reversestring(buffer), &buffer + 6, 10);
 
         free(buffer);
 

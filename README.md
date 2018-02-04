@@ -26,4 +26,5 @@ $ sass --watch src/sass/application.sass:site.css > log/sass &
 $ ruby scripts/mdparse.rb input.md output.html
 ```
 
-The `output.html` must be manually copied to its destination.
+The `output.html` must be manually copied to its destination. (Until HTMLPp is
+functional)

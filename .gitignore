@@ -1,3 +1,6 @@
+# Everything suffixed with _parsed
+*_parsed*
+
 # Sass cache files
 .sass-cache
 

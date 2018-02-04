@@ -16,6 +16,8 @@ respective files. If the CSS has changed, compile the Sass into `site.css`.
 
 ```sh
 $ sass src/sass/application.sass site.css
+or
+$ sass --watch src/sass/application.sass:site.css > log/sass &
 ```
 
 ### Parsing Markdown with RedCarpet

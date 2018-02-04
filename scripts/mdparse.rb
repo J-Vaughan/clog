@@ -18,4 +18,6 @@ output_file = File.open ARGV[1], "w"
 
 output = markdown.render input
 
+output = output.gsub(/<code>.*\n(.)/, '<code>\1')
+
 output_file.write output

@@ -1,5 +1,9 @@
-$body-max-width: 720px
+@import url('https://fonts.googleapis.com/css?family=Merriweather:900|Roboto+Mono:500|Roboto:500')
+
+$body-max-width:  1080px
 $general-padding: 1vh 1vw
+$top-bot-margin:  1vh 0
+$border-rad:      20px
 
 $mono-grown:    #314043
 $mono-storm:    #657E84
@@ -8,7 +12,15 @@ $mono-rustique: #CDCCAA
 $mono-candles:  #F4F3CD
 $mono-clay:     #272822
 
-$background-color: #F3ECE2
+$jv-light-gray: #FEFEFE
+$jv-candles:    #F3ECE2
+
+$file-background: $jv-light-gray
+$file-foreground: $mono-grown
+$file-name-fg:   $mono-grown
+$file-name-bg:   $mono-burnout
+
+$background-color: $jv-candles
 $foreground-color: $mono-grown
 
 @import index
@@ -21,5 +33,39 @@ body
 
   background-color: $background-color
   color: $foreground-color
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  font-family: 'Roboto', sans-serif
 
+.header
+  color: $mono-storm
+  padding: $general-padding
+
+  .logo
+    color: $mono-storm
+    font-family: 'Merriweather', 'Georgia', serif
+    margin: $top-bot-margin
+
+  .tagline
+    margin: $top-bot-margin
+
+.pizzaz
+  color: $mono-burnout
+
+code, .code
+  font-family: 'Roboto Mono', monospace
+  white-space: pre-line
+
+.file
+  background-color: $file-background
+  color: $file-foreground
+  margin: $general-padding
+  border-radius: $border-rad
+
+  .name
+    background-color: $file-name-bg
+    color: $file-name-fg
+    padding: $general-padding
+    border-radius: $border-rad $border-rad 0 0
+
+  .contents
+    padding: $general-padding
+    border-radius: 0 0 $border-rad $border-rad

@@ -1,18 +1,47 @@
+@import url("https://fonts.googleapis.com/css?family=Merriweather:900|Roboto+Mono:500|Roboto:500");
 .header {
   margin-bottom: 1vh; }
   .header h1 {
     font-size: 48px; }
 
-.readme {
-  padding: 1vh 1vw; }
-
 body {
-  max-width: 720px;
+  max-width: 1080px;
   margin: 0 auto !important;
   float: none !important;
   padding: 1vh 1vw;
   background-color: #F3ECE2;
   color: #314043;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+  font-family: "Roboto", sans-serif; }
+
+.header {
+  color: #657E84;
+  padding: 1vh 1vw; }
+  .header .logo {
+    color: #657E84;
+    font-family: "Merriweather", "Georgia", serif;
+    margin: 1vh 0; }
+  .header .tagline {
+    margin: 1vh 0; }
+
+.pizzaz {
+  color: #FF6652; }
+
+code, .code {
+  font-family: "Roboto Mono", monospace;
+  white-space: pre-line; }
+
+.file {
+  background-color: #FEFEFE;
+  color: #314043;
+  margin: 1vh 1vw;
+  border-radius: 20px; }
+  .file .name {
+    background-color: #FF6652;
+    color: #314043;
+    padding: 1vh 1vw;
+    border-radius: 20px 20px 0 0; }
+  .file .contents {
+    padding: 1vh 1vw;
+    border-radius: 0 0 20px 20px; }
 
 /*# sourceMappingURL=site.css.map */

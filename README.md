@@ -29,6 +29,12 @@ To uninstall from `/usr/bin/`
 $ sudo make uninstall
 ```
 
+To install locally in `$HOME/bin/`, which is automatically included in PATH
+
+```sh
+$ make dev
+```
+
 ## License
 
 This program is licensed under the GNU General Public License 3. The

@@ -1,3 +1,6 @@
+# All db files (for privacy and whatnot)
+*.db
+
 # Hardlinked version number
 version.h
 

@@ -21,11 +21,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sqlite3.h>
 
 #include "save.h"
 #include "main.h"
 #include "cli.h"
 #include "show.h"
+#include "database.h"
 #include "limits.h"
 #include "boolean.h"
 #include "options.h"
@@ -33,7 +35,7 @@
 int main (int argc, char* argv[])
 {
     char* message_buffer;
-    FILE* log_fp;
+    sqlite3* log_db;
     int   result;
 
     if (argc == 1) {
@@ -48,8 +50,7 @@ int main (int argc, char* argv[])
         return -11;
 
     if (SHOW_OPTION == TRUE) {
-        log_fp = fopen("log/logfile", "r");
-        show(SHOW_VALUE, log_fp);
+        puts("WIP");
 	    goto FEND;
     }
 
@@ -65,6 +66,13 @@ int main (int argc, char* argv[])
 
     NOOPTIONS:
 
+    result = open_or_new_db(log_db, 0);
+
+    if (result != 0) {
+        fprintf(stderr, "Unable to open database.\n");
+        return result;
+    }
+
     message_buffer = malloc(MAX_MESSAGE_LEN);
 
     result = parsemessage(argc, argv, message_buffer);
@@ -79,16 +87,10 @@ int main (int argc, char* argv[])
         return -4;
     }
 
-    log_fp = fopen("log/logfile", "r");
-
-    show(1, log_fp);
 
     free(message_buffer);
 
     FEND:
-
-    fclose(log_fp);
-
     END:
 
     return 0;

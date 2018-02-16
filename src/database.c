@@ -17,3 +17,67 @@
  *                                                                             *
  * You can contact me at dev.jamesvaughan@gmail.com with any questions         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#include "../lib/sqlite3/sqlite3.h"
+
+#include "database.h"
+
+int open_or_new_db (/* char* custom_name, */ sqlite3* db_ptr, int scope) {
+    // char* db_name;
+    // char* db_dir;
+    char* db_path = "./log/clog.db";
+    int result = 0;
+
+    //if (1 <= scope && scope <= 3); else return -12; // May be used in future
+
+/*  if (custom_name == NULL) { // May be used sometime in the future
+        db_name = malloc(16);
+        switch (scope) {
+            case 1: // local
+                db_name = "local_log.db"; // IDEA: possibly use dirname_log
+                db_dir  = malloc(5);
+                db_dir  = "log/";
+            break;
+            
+            case 2: // git TODO: later
+                db_name = "git_repo_log.db"; // IDEA: maybe use reponame_log
+                db_dir  = malloc(5);
+                db_dir  = "log/";
+            break;
+            
+            case 3: // global TODO: after git
+                db_name = "global_log.db"; // IDEA: maybe use username_log
+                db_dir  = malloc(5);
+                db_dir  = "log/";
+            break;
+        }
+
+        db_path = malloc(strlen(db_name) + strlen(db_dir));
+        strcpy(db_path, db_dir);
+        strcat(db_path, db_name);
+
+        free(db_dir);
+        free(db_name);
+    }
+    else {
+        db_path = malloc(strlen(custom_name));
+        strcpy(db_path, custom_name);
+    } 
+*/
+
+    result = sqlite3_open_v2(db_path, 
+                             &db_ptr, 
+                             SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, 
+                             NULL);
+
+    if (result != SQLITE_OK) {
+        fprintf(stderr, "SQLite Error: %s\n", sqlite3_errmsg(db_ptr));
+        return -13;
+    }
+
+    return 0;
+}

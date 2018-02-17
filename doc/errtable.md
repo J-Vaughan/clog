@@ -35,6 +35,13 @@ You can contact me at dev.jamesvaughan@gmail.com with any questions
 |         -9 | Couldn't find line size                                         |
 |        -10 | Message was too long, but con'd successfully                    |
 |        -11 | Finding options failed                                          |
+|        -12 | Invalid db scope                                                |
+|        -13 | sqlite3 db opening/creating error                               |
+|        -14 | sqlite3 db closing error                                        |
+|        -15 | sqlite3 db making table if not exists error                     |
+|        -16 | sqlite3 db saving message statement prep error                  |
+|        -17 | sqlite3 db saving message statement step error                  |
+|        -18 | sqlite3 db saving message statement finalize error              |
 <!----------------------------------------------------------------------------->
 
 Add rows as necessary.

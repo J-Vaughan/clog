@@ -22,12 +22,14 @@ CFLAGS = -Wall -std=gnu99
 CC = gcc
 INCLUDES = -I./inc
 LIBRARIES =
+INTERNAL_LIBRARIES = lib/sqlite3/sqlite3.c -lpthread -ldl
 
 VPATH = .:./inc:./src
 TARGET = clog
 
 $(TARGET): bindir |  main.o database.o cli.o save.o show.o Makefile
-	$(CC) $(CFLAGS) -o bin/$(TARGET) $(INCLUDES) $(LIBRARIES) main.o database.o cli.o save.o show.o
+	$(CC) $(CFLAGS) -o bin/$(TARGET) $(INCLUDES) $(LIBRARIES) $(INTERNAL_LIBRARIES) \
+	 main.o database.o cli.o save.o show.o
 
 bindir:
 	@if [ ! -d "bin" ]; \

@@ -42,6 +42,7 @@ You can contact me at dev.jamesvaughan@gmail.com with any questions
 |        -16 | sqlite3 db saving message statement prep error                  |
 |        -17 | sqlite3 db saving message statement step error                  |
 |        -18 | sqlite3 db saving message statement finalize error              |
+|        -19 | sqlite3 db showing message statement prep error                 |
 <!----------------------------------------------------------------------------->
 
 Add rows as necessary.

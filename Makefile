@@ -18,16 +18,18 @@
 # 
 # You can contact me at dev.jamesvaughan@gmail.com with any questions
 
-CFLAGS = -Wall -std=gnu99
+CFLAGS = -Wall -std=gnu99 -Os
 CC = gcc
 INCLUDES = -I./inc
 LIBRARIES =
+INTERNAL_LIBRARIES = lib/sqlite3/sqlite3.c -lpthread -ldl
 
 VPATH = .:./inc:./src
 TARGET = clog
 
 $(TARGET): bindir |  main.o database.o cli.o save.o show.o Makefile
-	$(CC) $(CFLAGS) -o bin/$(TARGET) $(INCLUDES) $(LIBRARIES) main.o database.o cli.o save.o show.o
+	$(CC) $(CFLAGS) -o bin/$(TARGET) $(INCLUDES) $(LIBRARIES) $(INTERNAL_LIBRARIES) \
+	 main.o database.o cli.o save.o show.o
 
 bindir:
 	@if [ ! -d "bin" ]; \
@@ -40,7 +42,7 @@ main.o:	main.c
 database.o: database.c
 	$(CC) $(CFLAGS) -c src/database.c $(INCLUDES) $(LIBRARIES)
 
-cli.o: cli.c help.txt
+cli.o: cli.c help.txt version.h
 	$(CC) $(CFLAGS) -c src/cli.c $(INCLUDES) $(LIBRARIES)
 
 save.o: save.c

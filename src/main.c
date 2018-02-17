@@ -39,8 +39,8 @@ const int ISDEV = 0;
 
 int main (int argc, char* argv[])
 {
-    char*       message_buffer;
-    int         result;
+    char*   message_buffer;
+    int     result;
 
     if (argc == 1) {
         fprintf(stderr, "Usage: clog [options] message text...\n");
@@ -48,13 +48,16 @@ int main (int argc, char* argv[])
     }
 
     result = options(argc, argv);
-    if (result == TRUE);
+    if (result == TRUE) /* continue */;
     else if (result == FALSE) goto NOOPTIONS;
     else if (result == ERR)
         return -11;
 
     if (SHOW_OPTION == TRUE) {
-        puts("WIP");
+        result = open_or_new_db(0);
+
+        if (result != 0) puts(ANSI_RED "!!HAVEN'T HANDLED THIS YET!!" ANSI_RESET);
+        show(SHOW_VALUE);
 	    goto FEND;
     }
 
@@ -95,8 +98,9 @@ int main (int argc, char* argv[])
         return -4;
     }
 
-
     free(message_buffer);
+
+    show(1);
 
     FEND:
 

@@ -28,66 +28,47 @@
 #include "limits.h"
 #include "colours.h"
 
-int show (int amount, FILE* log_fp) {
-    char* buffer;
-    long length;
-    char for_buf;
-    int  offset;
+#include "db.h"
 
-    // TODO: handle fseek errors
-    fseek(log_fp, -2, SEEK_END);
+extern int ISDEV;
 
-    while (amount > 0) {
+int show (int amount) {
+    sqlite3_stmt* selecter;
+    char* dupeded = malloc(64);
+    int result;
+    int i;
 
-        buffer = calloc(6, 1);
+    sprintf(dupeded, "SELECT stamp, contents FROM log ORDER BY stamp DESC LIMIT %i;", amount);
 
-        // DOCUMENT: !!
-        for (int i = 0; i <= 5; i++) {
-            for_buf = fgetc(log_fp);
-            if (for_buf != '$') {
-                if (i == 5) {
-                    fprintf(stderr, "Couldn't find previous message length\n");
-                    return -9;
-                }
-                if (i != 0) {
-                    buffer[6] = buffer[i - 1];
-                    buffer[i] = buffer[6];
-                    buffer[i - 1] = for_buf;
-                    fseek(log_fp, -2, SEEK_CUR);
-                }
-                else{
-                    buffer[i] = for_buf;
-                    fseek(log_fp, -2, SEEK_CUR);
-                }
-            }
-            else {
-                buffer[i + 1] = '\0';
-                break;
-            }
-        }
+    result = sqlite3_prepare_v2(db_ptr,
+                                dupeded,
+                                strlen(dupeded),
+                                &selecter,
+                                NULL);
 
-        length = strtol(buffer, &buffer+6, 10);
+    if (result != SQLITE_OK) {
+        fprintf(stderr, "SQLite Error %i: %s\n", result, sqlite3_errmsg(db_ptr));
+            if (ISDEV == 1) puts(ANSI_RED "db>showmessage>prepstmt:badd" ANSI_RESET);
+        return -19;
+    }
 
-        free(buffer);
+        if (ISDEV == 1) puts(ANSI_GREEN "db>showmessage>prepstmt:succ" ANSI_RESET);
+    
+    result = sqlite3_step(selecter);
 
-        offset = length + DATE_LEN + 1;
+    i = 0;
 
-        fseek(log_fp, -(offset + 2), SEEK_CUR);
+    while (result != SQLITE_DONE && result == SQLITE_ROW) {
+        printf(ANSI_CYAN "%s: " ANSI_RESET "%s\n",
+               sqlite3_column_text(selecter, 0),
+               sqlite3_column_text(selecter, 1));
+        
+        result = sqlite3_step(selecter);
+        i++;
+    }
 
-        for (int i = 0; i < offset; i++) {
-            char index = fgetc(log_fp);
-            if (i == 0)
-                printf(ANSI_CYAN);
-            else if (i == DATE_LEN)
-                printf(ANSI_RESET);
-            putc(index, stdout);
-        }
-
-        putc('\n', stdout);
-
-        fseek(log_fp, -(offset + 2), SEEK_CUR);
-
-        amount--;
+    if (i == 0) {
+        fprintf(stderr, ANSI_RED "No entries in database, or SQLite error\n" ANSI_RESET);
     }
 
     return 0;

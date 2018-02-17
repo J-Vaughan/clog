@@ -59,7 +59,7 @@ int show (int amount) {
     i = 0;
 
     while (result != SQLITE_DONE && result == SQLITE_ROW) {
-        printf(ANSI_CYAN "%s: " ANSI_RESET "%s\n",
+        printf(ANSI_CYAN "%s> " ANSI_RESET "%s\n",
                sqlite3_column_text(selecter, 0),
                sqlite3_column_text(selecter, 1));
         

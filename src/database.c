@@ -24,9 +24,14 @@
 
 #include "../lib/sqlite3/sqlite3.h"
 
+#include "colours.h"
 #include "database.h"
 
-int open_or_new_db (/* char* custom_name, */ sqlite3* db_ptr, int scope) {
+#include "db.h"
+
+extern int ISDEV;
+
+int open_or_new_db (/* char* custom_name, */ /* sqlite3* db_ptr, */ int scope) {
     // char* db_name;
     // char* db_dir;
     char* db_path = "./log/clog.db";
@@ -78,6 +83,20 @@ int open_or_new_db (/* char* custom_name, */ sqlite3* db_ptr, int scope) {
         fprintf(stderr, "SQLite Error: %s\n", sqlite3_errmsg(db_ptr));
         return -13;
     }
+
+    result = sqlite3_exec(db_ptr,
+                          "CREATE TABLE IF NOT EXISTS log (contents varchar(4096), stamp datetime);",
+                          NULL,
+                          NULL,
+                          NULL);
+    
+    if (result != SQLITE_OK) {
+        fprintf(stderr, "SQLite Error: %s\n", sqlite3_errmsg(db_ptr));
+            if (ISDEV == 1) puts(ANSI_RED "db>maketableifnot:badd" ANSI_RESET);
+        return -15;
+    }
+
+        if (ISDEV == 1) puts(ANSI_GREEN "db>maketableifnot:succ" ANSI_RESET);
 
     return 0;
 }

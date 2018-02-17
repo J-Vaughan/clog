@@ -22,6 +22,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../lib/sqlite3/sqlite3.h"
+
 #include "show.h"
 #include "limits.h"
 #include "colours.h"

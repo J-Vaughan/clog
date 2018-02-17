@@ -22,15 +22,21 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
+
+#include "../lib/sqlite3/sqlite3.h"
 
 #include "save.h"
 #include "limits.h"
+#include "colours.h"
+
+#include "db.h"
+
+extern int ISDEV;
 
 int parsemessage (int argc, char* argv[], char* buffer) {
     for (int i = 1; i < argc; i++) {
+            if (ISDEV == 1) {printf(ANSI_YELLOW "parsemessage>rawargv: " ANSI_RESET "%s\n", argv[i]);}
+
         if (strlen(buffer) + strlen(argv[i]) <= MAX_MESSAGE_LEN - 1)
             strcat(buffer, argv[i]);
         else {
@@ -47,46 +53,51 @@ int parsemessage (int argc, char* argv[], char* buffer) {
 }
 
 int savemessage (char* buffer) {
-    FILE*  logfile_fp;
-    char*  filename = "log/logfile"; // TODO: user-configurable
-    time_t date;
-    struct tm *date_tm;
-    char   date_s[32];
-    int    i = 0;
+    char* sql_statement = malloc(MAX_MESSAGE_LEN * 2);
+    sqlite3_stmt* justwork;
+    int result;
 
-    date = time(NULL);
-    date_tm = localtime(&date);
+    sprintf(sql_statement, 
+            "INSERT INTO log VALUES (\'%s\', datetime('now'));", buffer);
 
-    strftime(date_s, sizeof(date_s), "%c> ", date_tm); // TODO: error code -5
+    if (ISDEV == 1) printf(ANSI_MAGENTA "%s\n" ANSI_RESET, sql_statement);
+    
+    result = sqlite3_prepare_v2(db_ptr,
+                                sql_statement,
+                                strlen(sql_statement),
+                                &justwork,
+                                NULL);
 
-    if (access("log/", W_OK) != 0) {
-        if (mkdir("log", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0) {
-            printf("log directory created successfully\n");
-        }
-        else {
-            fprintf(stderr, "Couldn't create log directory\n");
-            return -6;
-        }
+    if (result != SQLITE_OK) {
+        fprintf(stderr, "SQLite Error %i: %s\n", result, sqlite3_errmsg(db_ptr));
+            if (ISDEV == 1) puts(ANSI_RED "db>savemessage>prepstmt:badd" ANSI_RESET);
+        return -16;
     }
 
-    logfile_fp = fopen(filename, "a");
+        if (ISDEV == 1) puts(ANSI_GREEN "db>savemessage>prepstmt:succ" ANSI_RESET);
 
-    if (logfile_fp == NULL) {
-        fprintf(stderr, "Couldn't open logfile\n");
-        return -7;
+    result = sqlite3_step(justwork);
+
+    if (result != SQLITE_DONE) {
+        fprintf(stderr, "SQLite Error %i: %s\n", result, sqlite3_errmsg(db_ptr));
+            if (ISDEV == 1) puts(ANSI_RED "db>savemessage>stepstmtt:badd" ANSI_RESET);
+        return -17;
     }
 
-    while (buffer[i] != '\0')
-        i++;
+        if (ISDEV == 1) puts(ANSI_GREEN "db>savemessage>stepstmt:succ" ANSI_RESET);
 
-    fputs(date_s, logfile_fp);
-    fputs(buffer, logfile_fp);
-    fprintf(logfile_fp, " $%i\n", i);
+    result = sqlite3_finalize(justwork);
 
-    // TODO: check if windows and crlf as necessary >> alternatively, not needed since printf does stuff
-    // fputc(10, logfile_fp); // \lf
+    if (result != SQLITE_OK) {
+        fprintf(stderr, "SQLite Error %i: %s\n", result, sqlite3_errmsg(db_ptr));
+            if (ISDEV == 1) puts(ANSI_RED "db>savemessage>finalstmtt:badd" ANSI_RESET);
+        return -18;
+    }
 
-    fclose(logfile_fp);
+        if (ISDEV == 1) puts(ANSI_GREEN "db>savemessage>finalstmt:succ" ANSI_RESET);
+
+
+    free(sql_statement);
 
     return 0;
 }

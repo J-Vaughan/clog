@@ -31,12 +31,16 @@
 #include "limits.h"
 #include "boolean.h"
 #include "options.h"
+#include "colours.h"
+
+sqlite3* db_ptr;
+
+const int ISDEV = 0;
 
 int main (int argc, char* argv[])
 {
-    char* message_buffer;
-    sqlite3* log_db;
-    int   result;
+    char*       message_buffer;
+    int         result;
 
     if (argc == 1) {
         fprintf(stderr, "Usage: clog [options] message text...\n");
@@ -66,20 +70,24 @@ int main (int argc, char* argv[])
 
     NOOPTIONS:
 
-    result = open_or_new_db(log_db, 0);
+    result = open_or_new_db(0);
 
     if (result != 0) {
-        fprintf(stderr, "Unable to open database.\n");
+        fprintf(stderr, ANSI_RED "Unable to open database.\n" ANSI_RESET);
+            if (ISDEV == 1) puts(ANSI_RED "db>open:badd" ANSI_RESET);
         return result;
     }
+        if (ISDEV == 1) puts(ANSI_GREEN "db>open:succ" ANSI_RESET);
 
-    message_buffer = malloc(MAX_MESSAGE_LEN);
+    message_buffer = calloc(MAX_MESSAGE_LEN, 1);
 
     result = parsemessage(argc, argv, message_buffer);
     if (result != 0 && result != -10) {
         fprintf(stderr, "Unable to parse message\n");
         return -2;
     }
+
+        if (ISDEV == 1) {printf(ANSI_YELLOW "general>parsedmessage: " ANSI_RESET "%s\n", message_buffer);}
 
     result = savemessage(message_buffer);
     if (result != 0) {
@@ -91,6 +99,16 @@ int main (int argc, char* argv[])
     free(message_buffer);
 
     FEND:
+
+    result = sqlite3_close_v2(db_ptr);
+
+    if (result != SQLITE_OK) {
+        fprintf(stderr, ANSI_RED "Error when closing db: %s\n", sqlite3_errmsg(db_ptr));
+            if (ISDEV == 1) puts(ANSI_RED "db>close:badd" ANSI_RESET);
+        return -14;
+    }
+        if (ISDEV == 1) puts(ANSI_GREEN "db>close:succ" ANSI_RESET);
+
     END:
 
     return 0;

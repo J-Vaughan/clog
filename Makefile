@@ -18,7 +18,7 @@
 # 
 # You can contact me at dev.jamesvaughan@gmail.com with any questions
 
-CFLAGS = -Wall -std=gnu99 -O3
+CFLAGS = -Wall -std=gnu99
 CC = gcc
 INCLUDES = -I./inc
 LIBRARIES =

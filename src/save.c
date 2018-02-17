@@ -56,6 +56,12 @@ int savemessage (char* buffer) {
     char* sql_statement = malloc(MAX_MESSAGE_LEN * 2);
     sqlite3_stmt* justwork;
     int result;
+    const char DONT = '\'';
+
+    if (strchr(buffer, DONT) != NULL) {
+        fprintf(stderr, ANSI_RED "Please do not use \'\n" ANSI_RESET);
+        return -20;
+    }
 
     sprintf(sql_statement, 
             "INSERT INTO log VALUES (\'%s\', datetime('now'));", buffer);

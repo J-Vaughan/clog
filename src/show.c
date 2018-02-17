@@ -70,6 +70,9 @@ int show (int amount) {
     if (i == 0) {
         fprintf(stderr, ANSI_RED "No entries in database, or SQLite error\n" ANSI_RESET);
     }
+    else if (i < amount) {
+        printf(ANSI_YELLOW "End of entries\n" ANSI_RESET);
+    }
 
     return 0;
 }

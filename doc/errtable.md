@@ -43,6 +43,7 @@ You can contact me at dev.jamesvaughan@gmail.com with any questions
 |        -17 | sqlite3 db saving message statement step error                  |
 |        -18 | sqlite3 db saving message statement finalize error              |
 |        -19 | sqlite3 db showing message statement prep error                 |
+|        -20 | message includes ' character, which is bad                      |
 <!----------------------------------------------------------------------------->
 
 Add rows as necessary.

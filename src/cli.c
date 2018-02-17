@@ -57,7 +57,7 @@ int options (int argc, char* argv[]) {
                 if (v > 0) {
                     if (v > MAX_SHOW) {
                         v = MAX_SHOW;
-                        fprintf(stderr, ANSI_RED "Show limit is %i\n" ANSI_RESET, MAX_SHOW);
+                        fprintf(stderr, ANSI_YELLOW "Show limit is %i\n" ANSI_RESET, MAX_SHOW);
                     }
 
                     SHOW_OPTION = TRUE;
@@ -67,7 +67,7 @@ int options (int argc, char* argv[]) {
             }
             else {
                 NULLERR:
-                fprintf(stderr, ANSI_RED
+                fprintf(stderr, ANSI_YELLOW
                         "Couldn't find amount of entries to show.\n"
                         "Defaulting to %i...\n"
                         ANSI_RESET,

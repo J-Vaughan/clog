@@ -26,11 +26,11 @@
 
 #include "colours.h"
 #include "database.h"
+#include "debug.h"
 
 #include "db.h"
 
-extern int ISDEV;
-
+/* !! fails if log directory does not exist !! */
 int open_or_new_db (/* char* custom_name, */ /* sqlite3* db_ptr, */ int scope) {
     // char* db_name;
     // char* db_dir;
@@ -81,8 +81,11 @@ int open_or_new_db (/* char* custom_name, */ /* sqlite3* db_ptr, */ int scope) {
 
     if (result != SQLITE_OK) {
         fprintf(stderr, "SQLite Error: %s\n", sqlite3_errmsg(db_ptr));
+        statreport(2, 3, "database", "openornew", "opendb");
+
         return -13;
     }
+    statreport(0, 3, "database", "openornew", "opendb");
 
     result = sqlite3_exec(db_ptr,
                           "CREATE TABLE IF NOT EXISTS log (contents varchar(4096), stamp datetime);",
@@ -92,11 +95,11 @@ int open_or_new_db (/* char* custom_name, */ /* sqlite3* db_ptr, */ int scope) {
     
     if (result != SQLITE_OK) {
         fprintf(stderr, "SQLite Error: %s\n", sqlite3_errmsg(db_ptr));
-            if (ISDEV == 1) puts(ANSI_RED "db>maketableifnot:badd" ANSI_RESET);
+        statreport(2, 3, "database", "openornew", "maketable");
+
         return -15;
     }
-
-        if (ISDEV == 1) puts(ANSI_GREEN "db>maketableifnot:succ" ANSI_RESET);
+    statreport(0, 3, "database", "openornew", "maketable");
 
     return 0;
 }

@@ -28,6 +28,7 @@
 #include "save.h"
 #include "limits.h"
 #include "colours.h"
+#include "debug.h"
 
 #include "db.h"
 
@@ -35,7 +36,6 @@ extern int ISDEV;
 
 int parsemessage (int argc, char* argv[], char* buffer) {
     for (int i = 1; i < argc; i++) {
-            if (ISDEV == 1) {printf(ANSI_YELLOW "parsemessage>rawargv: " ANSI_RESET "%s\n", argv[i]);}
 
         if (strlen(buffer) + strlen(argv[i]) <= MAX_MESSAGE_LEN - 1)
             strcat(buffer, argv[i]);
@@ -76,34 +76,34 @@ int savemessage (char* buffer) {
 
     if (result != SQLITE_OK) {
         fprintf(stderr, "SQLite Error %i: %s\n", result, sqlite3_errmsg(db_ptr));
-            if (ISDEV == 1) puts(ANSI_RED "db>savemessage>prepstmt:badd" ANSI_RESET);
+        statreport(2, 3, "save", "database", "prepstmt");
+        
         return -16;
     }
-
-        if (ISDEV == 1) puts(ANSI_GREEN "db>savemessage>prepstmt:succ" ANSI_RESET);
+    statreport(0, 3, "save", "database", "prepstmt");
 
     result = sqlite3_step(justwork);
 
     if (result != SQLITE_DONE) {
         fprintf(stderr, "SQLite Error %i: %s\n", result, sqlite3_errmsg(db_ptr));
-            if (ISDEV == 1) puts(ANSI_RED "db>savemessage>stepstmtt:badd" ANSI_RESET);
+        statreport(2, 3, "save", "database", "stepstmt");
+        
         return -17;
     }
-
-        if (ISDEV == 1) puts(ANSI_GREEN "db>savemessage>stepstmt:succ" ANSI_RESET);
+    statreport(0, 3, "save", "database", "stepstmt");
 
     result = sqlite3_finalize(justwork);
 
     if (result != SQLITE_OK) {
         fprintf(stderr, "SQLite Error %i: %s\n", result, sqlite3_errmsg(db_ptr));
-            if (ISDEV == 1) puts(ANSI_RED "db>savemessage>finalstmtt:badd" ANSI_RESET);
+        statreport(2, 3, "save", "database", "finlstmt");
+        
         return -18;
     }
-
-        if (ISDEV == 1) puts(ANSI_GREEN "db>savemessage>finalstmt:succ" ANSI_RESET);
-
+    statreport(0, 3, "save", "database", "finalstmt");
 
     free(sql_statement);
+    statreport(1, 2, "save", "freedbuf");
 
     return 0;
 }

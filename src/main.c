@@ -32,42 +32,67 @@
 #include "boolean.h"
 #include "options.h"
 #include "colours.h"
+#include "debug.h"
 
 sqlite3* db_ptr;
 
-const int ISDEV = 0;
+const int ISDEV = 0; // toggles semi-valuable output (1 = on)
 
 int main (int argc, char* argv[])
 {
-    char*   message_buffer;
-    int     result;
+    char*   message_buffer; // holds parsed message
+    int     result;         // holds result of methods (for error testing)
 
+    // no arguments given (at all)
     if (argc == 1) {
         fprintf(stderr, "Usage: clog [options] message text...\n");
+        statreport(2, 2, "main", "arguments");
+
         return -1;
     }
+    statreport(0, 2, "main", "arguments");
 
+    // tests whether any options were given
     result = options(argc, argv);
-    if (result == TRUE) /* continue */;
-    else if (result == FALSE) goto NOOPTIONS;
-    else if (result == ERR)
-        return -11;
 
+    // if options were given, continue to option tree
+    if (result == TRUE);
+
+    // if no options were given, skip option tree
+    else if (result == FALSE) goto NOOPTIONS;
+
+    // if options somehow returns an error, panic
+    else if (result == ERR) {
+        fprintf(stderr, ANSI_RED "Error detecting options\n" ANSI_RESET);
+        statreport(2, 4, "main", "arguments", "options", "detection");
+
+        return -11;
+    }
+
+    // if -s [x] or --show [x] was passed
     if (SHOW_OPTION == TRUE) {
+        // open the db and create table 
         result = open_or_new_db(0);
 
-        if (result != 0) puts(ANSI_RED "!!HAVEN'T HANDLED THIS YET!!" ANSI_RESET);
+        // yep
+        if (result != 0) 
+            puts(ANSI_RED "!!HAVEN'T HANDLED THIS YET!!" ANSI_RESET);
+
         show(SHOW_VALUE);
 	    goto FEND;
     }
 
     if (HELP == TRUE) {
         help();
+        statreport(0, 2, "main", "help");
+
         goto END;
     }
 
     if (VERSION == TRUE) {
         version();
+        statreport(0, 2, "main", "version");
+
         goto END;
     }
 
@@ -77,30 +102,39 @@ int main (int argc, char* argv[])
 
     if (result != 0) {
         fprintf(stderr, ANSI_RED "Unable to open database.\n" ANSI_RESET);
-            if (ISDEV == 1) puts(ANSI_RED "db>open:badd" ANSI_RESET);
+        statreport(2, 3, "main", "database", "opening");
+        
         return result;
     }
-        if (ISDEV == 1) puts(ANSI_GREEN "db>open:succ" ANSI_RESET);
+    statreport(0, 3, "main", "database", "opening");
 
     message_buffer = calloc(MAX_MESSAGE_LEN, 1);
 
     result = parsemessage(argc, argv, message_buffer);
+
     if (result != 0 && result != -10) {
         fprintf(stderr, "Unable to parse message\n");
+        statreport(2, 2, "main", "parsemessage");
+
         return -2;
     }
-
-        if (ISDEV == 1) {printf(ANSI_YELLOW "general>parsedmessage: " ANSI_RESET "%s\n", message_buffer);}
+    statreport(0, 2, "main", "parsemessage");
 
     result = savemessage(message_buffer);
+
     if (result != 0) {
         fprintf(stderr, "Unable to save message\n");
+        statreport(2, 2, "main", "savemessage");
+
         return -4;
     }
+    statreport(0, 2, "main", "savemessage");
 
     free(message_buffer);
+    statreport(1, 2, "main", "freedbuf");
 
     show(1);
+    statreport(0, 3, "main", "show", "(parsed)");
 
     FEND:
 
@@ -108,10 +142,11 @@ int main (int argc, char* argv[])
 
     if (result != SQLITE_OK) {
         fprintf(stderr, ANSI_RED "Error when closing db: %s\n", sqlite3_errmsg(db_ptr));
-            if (ISDEV == 1) puts(ANSI_RED "db>close:badd" ANSI_RESET);
+        statreport(2, 3, "main", "database", "closing");
+
         return -14;
     }
-        if (ISDEV == 1) puts(ANSI_GREEN "db>close:succ" ANSI_RESET);
+    statreport(0, 3, "main", "database", "closing");
 
     END:
 

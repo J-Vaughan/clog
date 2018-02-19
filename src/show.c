@@ -27,6 +27,7 @@
 #include "show.h"
 #include "limits.h"
 #include "colours.h"
+#include "debug.h"
 
 #include "db.h"
 
@@ -36,9 +37,11 @@ int show (int amount) {
     sqlite3_stmt* selecter;
     char* dupeded = malloc(64);
     int result;
-    int i;
+    int i = 0;
 
-    sprintf(dupeded, "SELECT stamp, contents FROM log ORDER BY stamp DESC LIMIT %i;", amount);
+    sprintf(dupeded,
+            "SELECT stamp, contents FROM log ORDER BY stamp DESC LIMIT %i;",
+            amount);
 
     result = sqlite3_prepare_v2(db_ptr,
                                 dupeded,
@@ -48,15 +51,13 @@ int show (int amount) {
 
     if (result != SQLITE_OK) {
         fprintf(stderr, "SQLite Error %i: %s\n", result, sqlite3_errmsg(db_ptr));
-            if (ISDEV == 1) puts(ANSI_RED "db>showmessage>prepstmt:badd" ANSI_RESET);
+        statreport(2, 3, "show", "database", "prepstmt");
+        
         return -19;
     }
-
-        if (ISDEV == 1) puts(ANSI_GREEN "db>showmessage>prepstmt:succ" ANSI_RESET);
+    statreport(0, 3, "show", "database", "prepstmt");
     
     result = sqlite3_step(selecter);
-
-    i = 0;
 
     while (result != SQLITE_DONE && result == SQLITE_ROW) {
         printf(ANSI_CYAN "%s> " ANSI_RESET "%s\n",

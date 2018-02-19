@@ -27,9 +27,9 @@ INTERNAL_LIBRARIES = lib/sqlite3/sqlite3.c -lpthread -ldl
 VPATH = .:./inc:./src
 TARGET = clog
 
-$(TARGET): bindir |  main.o database.o cli.o save.o show.o Makefile
+$(TARGET): bindir |  main.o database.o cli.o save.o show.o debug.o Makefile
 	$(CC) $(CFLAGS) -o bin/$(TARGET) $(INCLUDES) $(LIBRARIES) $(INTERNAL_LIBRARIES) \
-	 main.o database.o cli.o save.o show.o
+	 main.o database.o cli.o save.o show.o debug.o
 
 bindir:
 	@if [ ! -d "bin" ]; \
@@ -50,6 +50,9 @@ save.o: save.c
 
 show.o: show.c
 	$(CC) $(CFLAGS) -c src/show.c $(INCLUDES) $(LIBRARIES)
+
+debug.o: debug.c
+	$(CC) $(CFLAGS) -c src/debug.c $(INCLUDES) $(LIBRARIES)
 
 .PHONY: clean
 clean:

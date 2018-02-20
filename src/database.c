@@ -73,6 +73,16 @@ int open_or_new_db (/* char* custom_name, */ /* sqlite3* db_ptr, */ int scope) {
         strcpy(db_path, custom_name);
     } 
 */
+    
+    // check if the log dir exists, if not, make it
+    result = system("if [ ! -d \"log\" ]; \
+                    then mkdir \"log\"; \
+                    fi");
+
+    if (result < 0) {
+        fprintf(stderr, ANSI_RED "Could not create log directory\n" ANSI_RESET);
+        statreport(2, 3, "database", "openornew", "mkdir");
+    }
 
     result = sqlite3_open_v2(db_path, 
                              &db_ptr, 

@@ -40,7 +40,7 @@ int show (int amount) {
     int i = 0;
 
     sprintf(dupeded,
-            "SELECT stamp, contents FROM log ORDER BY stamp ASC LIMIT %i;",
+            "SELECT stamp, contents FROM log ORDER BY stamp DESC LIMIT %i;",
             amount);
 
     result = sqlite3_prepare_v2(db_ptr,

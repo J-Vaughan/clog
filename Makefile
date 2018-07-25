@@ -1,7 +1,7 @@
 # License and Contact Info
 # 
 # CLog, a logging tool written in C
-# Copyright (C) 2017 James Vaughan
+# Copyright (C) 2018 James Vaughan
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -65,3 +65,9 @@ install:
 .PHONY: uninstall
 uninstall:
 	rm -f /usr/bin/clog
+
+.PHONY: dev
+dev:
+	make
+	mv bin/$(TARGET) ~/bin/
+	make clean
